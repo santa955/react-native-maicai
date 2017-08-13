@@ -13,28 +13,28 @@ const App = TabNavigator({
     screen: Home,
     navigationOptions: ({navigation}) => ({
       tabBarLabel: '首页',
-      tabBarIcon: ({tintColor}) => (<Icon name="home" size={20} color={tintColor}/>)
+      tabBarIcon: ({tintColor}) => (<Icon name="home" size={24} color={tintColor}/>)
     })
   },
   Category: {
     screen: Category,
     navigationOptions: ({navigation}) => ({
       tabBarLabel: '分类',
-      tabBarIcon: ({tintColor}) => (<Icon name="list-ul" size={18} color={tintColor}/>)
+      tabBarIcon: ({tintColor}) => (<Icon name="list-ul" size={20} color={tintColor}/>)
     })
   },
   Chart: {
     screen: Cart,
     navigationOptions: ({navigation}) => ({
       tabBarLabel: '购物车',
-      tabBarIcon: ({tintColor}) => (<Icon name="shopping-cart" size={20} color={tintColor}/>)
+      tabBarIcon: ({tintColor}) => (<Icon name="shopping-cart" size={24} color={tintColor}/>)
     })
   },
   User: {
     screen: User,
     navigationOptions: ({navigation}) => ({
       tabBarLabel: '我的',
-      tabBarIcon: ({tintColor}) => (<Icon name="user" size={20} color={tintColor}/>)
+      tabBarIcon: ({tintColor}) => (<Icon name="user" size={24} color={tintColor}/>)
     })
   }
 }, {
@@ -43,7 +43,7 @@ const App = TabNavigator({
   swipeEnabled: true,
   animationEnabled: true,
   lazy: true,
-  initialRouteName: 'Home',
+  initialRouteName: 'User',
   backBehavior: 'none',
   tabBarOptions: {
     activeTintColor: '#3cb963',
@@ -62,7 +62,7 @@ const App = TabNavigator({
       height: 0 // 如TabBar下面显示有一条线，可以设高度为0后隐藏
     },
     labelStyle: {
-      fontSize: 10,
+      fontSize: 14,
       margin: 0,
       padding: 0
     },

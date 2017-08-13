@@ -5,10 +5,13 @@ export default class Block extends React.Component {
   render() {
     return (
       <View style={styles.block}>
-        <View style={styles.blockHeader}>
-          <Text style={styles.headerTitle}>{this.props.title}</Text>
-          <Text style={styles.headerLink}>{this.props.link || '更多'}</Text>
-        </View>
+        {this.props.title
+          ? <View style={styles.blockHeader}>
+              <Text style={styles.headerTitle}>{this.props.title}</Text>
+              <Text style={styles.headerLink}>{this.props.link || '更多'}
+              </Text>
+            </View>
+          : <Text></Text>}
         <View style={styles.blockContent}>
           {this.props.children}
         </View>
@@ -19,7 +22,7 @@ export default class Block extends React.Component {
 
 const styles = StyleSheet.create({
   block: {
-    marginTop: 6,
+    marginBottom: 8,
     justifyContent: 'space-between',
     minHeight: 50,
     backgroundColor: '#fff'

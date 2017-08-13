@@ -116,9 +116,10 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
   root: {
-    marginBottom: 10,
+    // marginBottom: 10,
     flex: 1,
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    backgroundColor: '#f5f5f5'
   },
   wrapper: {},
   slide: {
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     height: 35
   },
   menus: {
-    marginTop: 5,
+    marginVertical: 8,
     paddingHorizontal: 10,
     paddingTop: 0,
     paddingBottom: 20,
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'hidden',
+    overflow: 'hidden'
   },
   menuImage: {
     width: 70,
