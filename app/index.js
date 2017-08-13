@@ -69,7 +69,7 @@ const App = TabNavigator({
     style: {
       margin: 0,
       padding: 0,
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
     },
     iconStyle: {
       margin: 0,

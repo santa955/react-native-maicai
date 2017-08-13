@@ -11,6 +11,8 @@ import {
 import {TabNavigator} from 'react-navigation';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Block from '../components/Block';
+import ScrollList from '../components/ScrollList';
 let screenWidth = Dimensions
   .get('window')
   .width;
@@ -22,7 +24,7 @@ export default class Home extends Component {
   render() {
     return (
       <View style={styles.root}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.wrapper}>
             <Image
               style={styles.slide}
@@ -103,10 +105,9 @@ export default class Home extends Component {
               <Text style={styles.menuText}>邀请有礼</Text>
             </View>
           </View>
-          <View style={styles.block}></View>
-          <View style={styles.block}></View>
-          <View style={styles.block}></View>
-          <View style={styles.block}></View>
+          <Block title="限时抢购">
+            <ScrollList></ScrollList>
+          </Block>
         </ScrollView>
       </View>
     )
@@ -115,6 +116,7 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
   root: {
+    marginBottom: 10,
     flex: 1,
     justifyContent: 'flex-start'
   },
@@ -129,34 +131,28 @@ const styles = StyleSheet.create({
   banner: {
     height: 35
   },
-  block: {
-    flexDirection: 'row',
-    marginTop: 6,
-    justifyContent: 'space-between',
-    height: 100,
-    backgroundColor: '#fff'
-  },
   menus: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    marginTop: 6,
-    padding: 5,
+    marginTop: 5,
+    paddingHorizontal: 10,
+    paddingTop: 0,
+    paddingBottom: 20,
     alignItems: 'center',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
     backgroundColor: '#fff'
   },
   menu: {
-    width: (screenWidth - 10) / 4,
-    height: 80,
+    width: (screenWidth - 20) / 4,
+    paddingTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   menuImage: {
-    width: 55,
-    height: 55
+    width: 70,
+    height: 70
   },
   menuText: {
-    fontSize: 10
+    fontSize: 14
   }
 })

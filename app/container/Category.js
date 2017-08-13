@@ -61,7 +61,7 @@ export default class Category extends Component {
 
 const styles = StyleSheet.create({
   wrapper: {
-    // flex: 1, flexDirection: 'row', height: screenWidth / 2
+    
   },
   slide: {
     flexDirection: 'row',
