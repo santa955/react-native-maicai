@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {Image, StyleSheet, View, Text} from 'react-native';
 import {StackNavigator, TabNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Home from './container/Home';
 import Category from './container/Category';
 import Cart from './container/Cart';
-import User from './container/User';
+import UserStackNavigator from './container/UserStackNavigator';
 
 const App = TabNavigator({
   Home: {
@@ -31,7 +31,7 @@ const App = TabNavigator({
     })
   },
   User: {
-    screen: User,
+    screen: UserStackNavigator,
     navigationOptions: ({navigation}) => ({
       tabBarLabel: '我的',
       tabBarIcon: ({tintColor}) => (<Icon name="user" size={24} color={tintColor}/>)
@@ -69,7 +69,7 @@ const App = TabNavigator({
     style: {
       margin: 0,
       padding: 0,
-      backgroundColor: '#fff',
+      backgroundColor: '#fff'
     },
     iconStyle: {
       margin: 0,
@@ -77,4 +77,18 @@ const App = TabNavigator({
     }
   }
 });
+
+const styles = StyleSheet.create({
+  badge: {
+    position: 'absolute',
+    width: 12,
+    height: 12,
+    fontSize: 12,
+    backgroundColor: 'red',
+    color: '#fff',
+    top: 0,
+    right: -5,
+    opacity: 1
+  }
+})
 export default App;

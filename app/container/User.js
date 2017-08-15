@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import {TabNavigator} from 'react-navigation';
+import {StackNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import MenuBlock from '../components/MenuBlock'
+import MenuBlock from '../components/MenuBlock';
+import Order from '../container/Order'
 
 export default class User extends Component {
   render() {
@@ -23,7 +24,9 @@ export default class User extends Component {
         </Image>
         <View style={styles.orderBlock}>
           <View style={styles.blockHeader}>
-            <View style={styles.headerItem}>
+            <View
+              style={styles.headerItem}
+              onPress={() => navigate('Order', {name: 'Brent'})}>
               <Image style={styles.icon} source={require("../static/icon-order.png")}/>
               <Text style={styles.name}>我的订单</Text>
             </View>
@@ -105,6 +108,7 @@ export default class User extends Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   root: {
     paddingBottom: 10,
