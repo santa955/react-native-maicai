@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Button,
+  TouchableOpacity
+} from 'react-native';
 import {StackNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MenuBlock from '../components/MenuBlock';
@@ -7,6 +14,7 @@ import Order from '../container/Order'
 
 export default class User extends Component {
   render() {
+    const {navigate} = this.props.navigation;
     return (
       <View style={styles.root}>
         <Image
@@ -23,18 +31,21 @@ export default class User extends Component {
           </View>
         </Image>
         <View style={styles.orderBlock}>
-          <View style={styles.blockHeader}>
-            <View
-              style={styles.headerItem}
-              onPress={() => navigate('Order', {name: 'Brent'})}>
-              <Image style={styles.icon} source={require("../static/icon-order.png")}/>
-              <Text style={styles.name}>我的订单</Text>
+          <TouchableOpacity
+            activeOpacity={1}
+            focusedOpacity={1}
+            onPress={() => navigate('Order', {name: 'Brent'})}>
+            <View style={styles.blockHeader}>
+              <View style={styles.headerItem}>
+                <Image style={styles.icon} source={require("../static/icon-order.png")}/>
+                <Text style={styles.name}>我的订单</Text>
+              </View>
+              <View style={styles.headerItem}>
+                <Text style={styles.desc}>查看全部订单</Text>
+                <Icon style={[styles.iconArrow, styles.orderIconArrow]} name="angle-right"></Icon>
+              </View>
             </View>
-            <View style={styles.headerItem}>
-              <Text style={styles.desc}>查看全部订单</Text>
-              <Icon style={[styles.iconArrow, styles.orderIconArrow]} name="angle-right"></Icon>
-            </View>
-          </View>
+          </TouchableOpacity>
           <View style={styles.blockContent}>
             <View style={styles.headerMenus}>
               <View style={styles.headerMenu}>

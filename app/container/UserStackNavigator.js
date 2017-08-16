@@ -4,14 +4,25 @@ import {TabNavigator, StackNavigator, TabBarBottom} from 'react-navigation';
 import User from './User';
 import Order from './Order';
 
-const UserStackNavigators = StackNavigator({
+const UserStackNavigator = StackNavigator({
   User: {
     screen: User,
     navigationOptions: {
-      title: '我的',
+      header: null
+    }
+  },
+  Order: {
+    screen: Order,
+    navigationOptions: {
+      title: '订单',
+      header: (
+        <View>
+          <Text>This is my HEADER</Text>
+        </View>
+      ),
       headerStyle: {
         backgroundColor: '#2eb257',
-        height:20
+        height: 20
       },
       headerTitleStyle: {
         color: 'white',
@@ -24,14 +35,11 @@ const UserStackNavigators = StackNavigator({
       },
       headerTintColor: 'white'
     }
-  },
-  Order: {
-    screen: Order
   }
-}, {});
+}, {
+  transitionConfig: () => {
+    // screenInterpolator : CardStackStyleInterpolator.forHorizontal
+  }
+});
 
-export default class UserStackNavigator extends React.Component {
-  render() {
-    return (<UserStackNavigators/>)
-  }
-}
+export default UserStackNavigator
