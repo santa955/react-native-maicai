@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import {TabNavigator, StackNavigator, TabBarBottom} from 'react-navigation';
-import User from './User';
-import Order from './Order';
+import User from '../container/User';
+import OrderListTabNavigator from '../navigator/OrderListTabNavigator';
+import CustomerAnimate from '../animations'
 
 const UserStackNavigator = StackNavigator({
   User: {
@@ -12,14 +13,8 @@ const UserStackNavigator = StackNavigator({
     }
   },
   Order: {
-    screen: Order,
+    screen: OrderListTabNavigator,
     navigationOptions: {
-      title: '订单',
-      header: (
-        <View>
-          <Text>This is my HEADER</Text>
-        </View>
-      ),
       headerStyle: {
         backgroundColor: '#2eb257',
         height: 20
@@ -38,7 +33,11 @@ const UserStackNavigator = StackNavigator({
   }
 }, {
   transitionConfig: () => {
-    // screenInterpolator : CardStackStyleInterpolator.forHorizontal
+    return {
+      screenInterpolator: (sceneProps) => {
+        return CustomerAnimate.Horizontal(sceneProps);
+      }
+    }
   }
 });
 

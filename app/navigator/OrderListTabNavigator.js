@@ -3,72 +3,64 @@ import {Image, StyleSheet, View, Text} from 'react-native';
 import {StackNavigator, TabNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import Home from './container/Home';
-import Category from './container/Category';
-import Cart from './container/Cart';
-import UserStackNavigator from './navigator/UserStackNavigator';
+import Order from '../container/Order';
+import Category from '../container/Category';
+import Cart from '../container/Cart';
 
 const App = TabNavigator({
-  Home: {
-    screen: Home,
+  Order: {
+    screen: Order,
     navigationOptions: ({navigation}) => ({
-      tabBarLabel: '首页',
+      tabBarLabel: '全部',
       tabBarIcon: ({tintColor}) => (<Icon name="home" size={24} color={tintColor}/>)
     })
   },
   Category: {
     screen: Category,
     navigationOptions: ({navigation}) => ({
-      tabBarLabel: '分类',
+      tabBarLabel: '待支付',
       tabBarIcon: ({tintColor}) => (<Icon name="list-ul" size={20} color={tintColor}/>)
     })
   },
   Chart: {
     screen: Cart,
     navigationOptions: ({navigation}) => ({
-      tabBarLabel: '购物车',
+      tabBarLabel: '待收货',
       tabBarIcon: ({tintColor}) => (<Icon name="shopping-cart" size={24} color={tintColor}/>)
     })
   },
-  User: {
-    screen: UserStackNavigator,
+  Comment: {
+    screen: Cart,
     navigationOptions: ({navigation}) => ({
-      tabBarLabel: '我的',
-      tabBarIcon: ({tintColor}) => (<Icon name="user" size={24} color={tintColor}/>)
+      tabBarLabel: '待评价',
+      tabBarIcon: ({tintColor}) => (<Icon name="shopping-cart" size={24} color={tintColor}/>)
     })
   }
+
 }, {
-  // tabBarComponent: 'TabBarBottom',
-  tabBarPosition: 'bottom',
+  // tabBarComponent: 'TabBarBottom',   tabBarPosition: 'bottom',
   swipeEnabled: true,
   animationEnabled: true,
   lazy: true,
-  initialRouteName: 'User',
+  initialRouteName: 'Order',
   backBehavior: 'none',
   tabBarOptions: {
     activeTintColor: '#3cb963',
-    activeBackgroundColor: 'white',
+    activeBackgroundColor: '#fff',
     inactiveTintColor: '#333',
-    inactiveBackgroundColor: 'white',
-    showIcon: true,
+    inactiveBackgroundColor: 'fff',
+    // showIcon: true,
     tabStyle: {
-      margin: 0,
       paddingBottom: 8,
-      height: 48
+      height: 30
     },
     indicatorStyle: {
-      margin: 0,
-      padding: 0,
-      height: 0 // 如TabBar下面显示有一条线，可以设高度为0后隐藏
+      backgroundColor: '#3cb963'
     },
     labelStyle: {
-      fontSize: 14,
-      margin: 0,
-      padding: 0
+      fontSize: 14
     },
     style: {
-      margin: 0,
-      padding: 0,
       backgroundColor: '#fff'
     },
     iconStyle: {
