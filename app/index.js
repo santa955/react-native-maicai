@@ -40,7 +40,7 @@ const App = TabNavigator({
 }, {
   // tabBarComponent: 'TabBarBottom',
   tabBarPosition: 'bottom',
-  swipeEnabled: true,
+  swipeEnabled: false,
   animationEnabled: true,
   lazy: true,
   initialRouteName: 'User',

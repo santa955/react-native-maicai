@@ -16,10 +16,10 @@ export default class Nav extends React.Component {
     constructor(props) {
         super(props);
     }
-    componentWillMount() {}
+    componentWillMount() { }
     render() {
         return (
-            <View style={{flex: 1, position:'relative'}}>
+            <View style={{ flex: 1, position: 'relative' }}>
                 <Text>测试</Text>
                 <View style={styles.tabs}>
                     <View style={styles.tab}>
