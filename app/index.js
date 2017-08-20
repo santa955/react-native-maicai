@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import {Image, StyleSheet, View, Text} from 'react-native';
-import {StackNavigator, TabNavigator} from 'react-navigation';
+import {StackNavigator, TabNavigator, TabBarBottom} from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Home from './container/Home';
 import Category from './container/Category';
 import Cart from './container/Cart';
+import Detail from './container/Detail';
 import UserStackNavigator from './navigator/UserStackNavigator';
-
-const App = TabNavigator({
+import CustomerAnimate from './animations';
+const tabNavigator = TabNavigator({
   Home: {
     screen: Home,
     navigationOptions: ({navigation}) => ({
@@ -38,12 +39,12 @@ const App = TabNavigator({
     })
   }
 }, {
-  // tabBarComponent: 'TabBarBottom',
+  tabBarComponent: TabBarBottom,
   tabBarPosition: 'bottom',
   swipeEnabled: false,
   animationEnabled: true,
   lazy: true,
-  initialRouteName: 'User',
+  initialRouteName: 'Home',
   backBehavior: 'none',
   tabBarOptions: {
     activeTintColor: '#3cb963',
@@ -78,6 +79,42 @@ const App = TabNavigator({
   }
 });
 
+const stackNavigator = StackNavigator({
+  Tabs: {
+    screen: tabNavigator,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Detail: {
+    screen: Detail,
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: '#2eb257',
+        height: 20
+      },
+      headerTitleStyle: {
+        color: 'white',
+        fontSize: 14,
+        textAlign: 'center'
+      },
+      headerBackTitleStyle: {
+        color: 'white',
+        fontSize: 14
+      },
+      headerTintColor: 'white'
+    }
+  }
+}, {
+  transitionConfig: () => {
+    return {
+      screenInterpolator: (sceneProps) => {
+        return CustomerAnimate.Horizontal(sceneProps);
+      }
+    }
+  }
+});
+
 const styles = StyleSheet.create({
   badge: {
     position: 'absolute',
@@ -91,4 +128,4 @@ const styles = StyleSheet.create({
     opacity: 1
   }
 })
-export default App;
+export default stackNavigator;

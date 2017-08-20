@@ -9,28 +9,67 @@ import {
   ScrollView
 } from 'react-native';
 import {TabNavigator} from 'react-navigation';
-import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Carousel from 'react-native-looped-carousel';
 import Block from '../components/Block';
 import ScrollList from '../components/ScrollList';
+import BottomIndicator from '../components/BottomIndicator';
 let screenWidth = Dimensions
   .get('window')
   .width;
 export default class Home extends Component {
   constructor() {
     super()
+    this.state = {
+      size: {
+        width: screenWidth,
+        height: screenWidth / 2
+      }
+    }
   }
-  componentDidMount() {}
   render() {
     return (
       <View style={styles.root}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.wrapper}>
-            <Image
-              style={styles.slide}
-              source={{
-              uri: 'https://ddimg.ddxq.mobi/6f081fc891f651502445702133.jpg'
-            }}/>
+            <Carousel
+              style={this.state.size}
+              delay={3000}
+              autoplay
+              bullets
+              bulletStyle={{
+              margin: 5,
+              width: 6,
+              height: 6,
+              backgroundColor: '#ccc',
+              borderColor: '#ccc'
+            }}
+              chosenBulletStyle={{
+              margin: 5,
+              width: 6,
+              height: 6,
+              backgroundColor: '#3cb963',
+              borderColor: '#3cb963'
+            }}
+              bulletsContainerStyle={{
+              bottom: -10
+            }}>
+              <Image
+                style={styles.slide}
+                source={{
+                uri: 'https://ddimg.ddxq.mobi/01d57f2698fd51503020791480.jpg'
+              }}/>
+              <Image
+                style={styles.slide}
+                source={{
+                uri: 'https://ddimg.ddxq.mobi/081ab8971502876133546.jpg'
+              }}/>
+              <Image
+                style={styles.slide}
+                source={{
+                uri: 'https://ddimg.ddxq.mobi/140a821ba60d61499052414948.png'
+              }}/>
+            </Carousel>
           </View>
           <View style={styles.banner}>
             <Image
@@ -105,9 +144,26 @@ export default class Home extends Component {
               <Text style={styles.menuText}>邀请有礼</Text>
             </View>
           </View>
-          <Block title="限时抢购">
+          <Block title="限时抢购" type={1} link="更多" navigation={this.props.navigation}>
             <ScrollList></ScrollList>
           </Block>
+          <Block
+            title="小排拼团没？"
+            subTitle="9.9元我拼了！细数与小排的美味搭配"
+            type={2}
+            link="更多"
+            navigation={this.props.navigation}>
+            <ScrollList></ScrollList>
+          </Block>
+          <Block
+            title="新品驾到"
+            subTitle="缸鸭狗手工系列 老底子的宁波味道"
+            type={2}
+            link="更多"
+            navigation={this.props.navigation}>
+            <ScrollList></ScrollList>
+          </Block>
+          <BottomIndicator show="true"></BottomIndicator>
         </ScrollView>
       </View>
     )
@@ -123,11 +179,9 @@ const styles = StyleSheet.create({
   },
   wrapper: {},
   slide: {
-    flexDirection: 'row',
-    height: screenWidth / 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#eee'
+    flex: 1,
+    resizeMode: 'contain',
+    height: screenWidth / 2
   },
   banner: {
     height: 35

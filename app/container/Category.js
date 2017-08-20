@@ -1,74 +1,80 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Dimensions, Image} from 'react-native';
 import {TabNavigator} from 'react-navigation';
-import Swiper from 'react-native-swiper';
+import Carousel from 'react-native-looped-carousel';
 let screenWidth = Dimensions
   .get('window')
   .width;
 export default class Category extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      size: {
+        width: screenWidth,
+        height: screenWidth / 2
+      }
+    }
+  }
+  componentDidMount() {}
   render() {
     return (
       <View>
         <View>
-          <Swiper
-            style={styles.wrapper}
-            showsButtons={false}
-            paginationStyle={{
-            top: 0
+          <Carousel
+            delay={4000}
+            style={this.state.size}
+            autoplay
+            bullets
+            bulletStyle={{
+            margin: 5,
+            width: 6,
+            height: 6,
+            backgroundColor: '#ccc',
+            borderColor: '#ccc'
+          }}
+            chosenBulletStyle={{
+            margin: 5,
+            width: 6,
+            height: 6,
+            backgroundColor: '#3cb963',
+            borderColor: '#3cb963'
+          }}
+            bulletsContainerStyle={{
+            bottom: -10
           }}>
-            <View>
-              <Image
-                style={styles.slide}
-                source={{
-                uri: 'https://ddimg.ddxq.mobi/6f081fc891f651502445702133.jpg'
-              }}/>
-            </View>
-            <View>
-              <Image
-                style={styles.slide}
-                source={{
-                uri: 'https://ddimg.ddxq.mobi/e0082b524f56d1502275949019.jpg'
-              }}/>
-            </View>
-            <View>
-              <Image
-                style={styles.slide}
-                source={{
-                uri: 'https://ddimg.ddxq.mobi/893d493f5fd061502276163620.jpg'
-              }}/>
-            </View>
-            <View>
-              <Image
-                style={styles.slide}
-                source={{
-                uri: 'https://ddimg.ddxq.mobi/5a34b1acff2cd1501849276250.jpg'
-              }}/>
-            </View>
-            <View>
-              <Image
-                style={styles.slide}
-                source={{
-                uri: 'https://ddimg.ddxq.mobi/1e9e79591502331927513.jpg'
-              }}/>
-            </View>
-          </Swiper>
+            <Image
+              style={styles.slide}
+              source={{
+              uri: 'https://ddimg.ddxq.mobi/01d57f2698fd51503020791480.jpg'
+            }}/>
+            <Image
+              style={styles.slide}
+              source={{
+              uri: 'https://ddimg.ddxq.mobi/081ab8971502876133546.jpg'
+            }}/>
+            <Image
+              style={styles.slide}
+              source={{
+              uri: 'https://ddimg.ddxq.mobi/140a821ba60d61499052414948.png'
+            }}/>
+          </Carousel>
         </View>
-        <Text>≤‚ ‘</Text>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    
+  wrapper: {},
+  slideContainer: {
+    height: screenWidth / 2
   },
   slide: {
-    flexDirection: 'row',
-    width: screenWidth,
-    height: screenWidth / 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#333'
+    flex: 1,
+    resizeMode: 'contain',
+    height: screenWidth / 2
+  },
+  dot: {
+    backgroundColor: 'red'
   }
 })
