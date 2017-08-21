@@ -31,7 +31,7 @@ export default class Home extends Component {
       }
     }
   }
-  render () {
+  render() {
     return (
       <View style={styles.root}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -46,52 +46,20 @@ export default class Home extends Component {
               }} />
           </View>
           {this.renderMenus(BlocksData.list[2].icon_list)}
-          <Block title="限时抢购" type={1} link="更多" navigation={this.props.navigation}>
-            <ScrollList products={BlocksData.list[3].product_list}></ScrollList>
-          </Block>
-          <Block
-            title={BlocksData.list[5].title}
-            subTitle={BlocksData.list[5].sub_title}
-            type={2}
-            link="更多"
-            navigation={this.props.navigation}>
-            <ScrollList products={BlocksData.list[5].product_list}></ScrollList>
-          </Block>
-          <Block
-            title={BlocksData.list[6].title}
-            subTitle={BlocksData.list[6].sub_title}
-            type={2}
-            link="更多"
-            navigation={this.props.navigation}>
-            <ScrollList products={BlocksData.list[6].product_list}></ScrollList>
-          </Block>
-          <Block
-            title={BlocksData.list[7].title}
-            subTitle={BlocksData.list[7].sub_title}
-            type={2}
-            link="更多"
-            navigation={this.props.navigation}>
-            <ScrollList products={BlocksData.list[7].product_list}></ScrollList>
-          </Block>
-          <Block
-            title={BlocksData.list[8].title}
-            subTitle={BlocksData.list[8].sub_title}
-            type={2}
-            link="更多"
-            navigation={this.props.navigation}>
-            <ScrollList products={BlocksData.list[8].product_list}></ScrollList>
-          </Block>
+
+          {this.renderBlocks(BlocksData.list)}
           <BottomIndicator show="true"></BottomIndicator>
         </ScrollView>
       </View>
     )
   }
-  renderSlides (data) {
+  renderSlides(data) {
     let slides = data.map((slide) => {
       return (
         <Image
+          key={slide.meteria_id}
           style={styles.slide}
-          source={{ uri: 'https://ddimg.ddxq.mobi/7db68ea93024c1503299932969.jpg' }}
+          source={{ uri: slide.icon_url }}
         />
       )
     })
@@ -120,7 +88,7 @@ export default class Home extends Component {
       {slides}
     </Carousel>);
   }
-  renderMenus (data) {
+  renderMenus(data) {
     let menus = data.map((menu) => {
       return (
         <View style={styles.menu} key={menu['meteria_id']}>
@@ -138,6 +106,28 @@ export default class Home extends Component {
         {menus}
       </View>
     )
+  }
+  renderBlocks(data) {
+    let navigation = this.props.navigation;
+    let blocksData = data.filter((blockdata) => {
+      return 5 === parseInt(blockdata.type, 10)
+        || 3 === parseInt(blockdata.type, 10)
+    })
+
+    return blocksData.map((block) => {
+      let type = parseInt(block.type, 10)
+      return (<Block
+        key={type == 5 ? block.meteria_id : block.promotion_id}
+        title={type == 5 ? block.title : "限时抢购"}
+        subTitle={block.sub_title}
+        type={type == 5 ? 2 : 1}
+        link="更多">
+        <ScrollList
+          products={block.product_list}
+          navigation={navigation}>
+        </ScrollList>
+      </Block>)
+    })
   }
 }
 

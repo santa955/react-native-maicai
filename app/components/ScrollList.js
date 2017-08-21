@@ -6,7 +6,8 @@ import {
   Button,
   Image,
   Dimensions,
-  ScrollView
+  ScrollView,
+  TouchableOpacity
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -19,19 +20,25 @@ export default class ScrollList extends Component {
     super()
   }
 
-  render () {
-    let products = this.props.products
+  render() {
+    let products = this.props.products;
+    const navigate = this.props.navigation;
     let cards = products.map((product) => {
       return (
-        <View style={styles.card}>
-          <Image
-            style={styles.cardImage}
-            source={{
-              uri: product.small_image
-            }} />
+        <View style={styles.card} key={product.id}>
+          <TouchableOpacity
+            activeOpacity={1}
+            focusedOpacity={1}
+            onPress={() => navigate.navigate('Detail')}>
+            <Image
+              style={styles.cardImage}
+              source={{
+                uri: product.small_image
+              }} />
+          </TouchableOpacity>
           <Text style={styles.cardDesc}>{product.product_name}</Text>
           <View style={styles.cardMore}>
-            <Text style={styles.price}>{product.price}</Text>
+            <Text style={styles.price}>{"￥"+product.price}</Text>
             <Icon style={styles.cart} name="shopping-cart" />
           </View>
         </View>
