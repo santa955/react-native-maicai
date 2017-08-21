@@ -63,12 +63,6 @@ export default class Detail extends React.Component {
                 style={styles.slide}
                 source={{
                 uri: 'https://ddimg.ddxq.mobi/1f8435ba1496397258544.jpg'
-              }}
-                onLoadStart={() => {
-                alert('start')
-              }}
-                onLoadEnd={() => {
-                alert('end')
               }}/>
               <Image
                 style={styles.slide}
