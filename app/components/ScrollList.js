@@ -32,6 +32,7 @@ export default class ScrollList extends Component {
             onPress={() => navigate.navigate('Detail')}>
             <Image
               style={styles.cardImage}
+              resizeMethod="resize"
               source={{
                 uri: product.small_image
               }} />
@@ -68,8 +69,7 @@ const styles = StyleSheet.create({
   cardImage: {
     width: 100,
     height: 100,
-    overflow: 'hidden',
-    resizeMode: 'center',
+    resizeMode: 'contain',
     backgroundColor: '#efefef'
   },
   cardDesc: {

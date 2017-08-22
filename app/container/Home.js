@@ -11,6 +11,7 @@ import {
 import { TabNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Carousel from 'react-native-looped-carousel';
+import SearchHeader from '../components/Header/SearchHeader';
 import Block from '../components/Block';
 import ScrollList from '../components/ScrollList';
 import BottomIndicator from '../components/BottomIndicator';
@@ -34,12 +35,14 @@ export default class Home extends Component {
   render() {
     return (
       <View style={styles.root}>
+        <SearchHeader></SearchHeader>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.wrapper}>
             {this.renderSlides(BlocksData.list[0].icon_list)}
           </View>
           <View style={styles.banner}>
             <Image
+              resizeMethod="resize"
               style={styles.banner}
               source={{
                 uri: 'https://ddimg.ddxq.mobi/bc27ddc54e92b1497233676444.png'
@@ -93,6 +96,7 @@ export default class Home extends Component {
       return (
         <View style={styles.menu} key={menu['meteria_id']}>
           <Image
+            resizeMethod="resize"
             style={styles.menuImage}
             source={{
               uri: menu.icon_url

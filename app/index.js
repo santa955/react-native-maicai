@@ -48,9 +48,9 @@ const tabNavigator = TabNavigator({
   backBehavior: 'none',
   tabBarOptions: {
     activeTintColor: '#3cb963',
-    activeBackgroundColor: 'white',
-    inactiveTintColor: '#333',
-    inactiveBackgroundColor: 'white',
+    activeBackgroundColor: '#fff',
+    inactiveTintColor: '#999',
+    inactiveBackgroundColor: '#fff',
     showIcon: true,
     tabStyle: {
       margin: 0,

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -18,7 +18,7 @@ let screenWidth = Dimensions
 export default class Detail extends React.Component {
   static navigationOptions = {
     header: (HeaderProps) => {
-      return <Header navigation={HeaderProps}/>
+      return <Header navigation={HeaderProps} />
     }
   }
   constructor() {
@@ -41,39 +41,40 @@ export default class Detail extends React.Component {
               style={this.state.size}
               delay={3000}
               autoplay
-              bullets
+              bullets              
               bulletStyle={{
-              margin: 5,
-              width: 6,
-              height: 6,
-              backgroundColor: '#ccc',
-              borderColor: '#ccc'
-            }}
+                margin: 5,
+                width: 6,
+                height: 6,
+                backgroundColor: '#ccc',
+                borderColor: '#ccc'
+              }}
               chosenBulletStyle={{
-              margin: 5,
-              width: 6,
-              height: 6,
-              backgroundColor: '#3cb963',
-              borderColor: '#3cb963'
-            }}
+                margin: 5,
+                width: 6,
+                height: 6,
+                backgroundColor: '#3cb963',
+                borderColor: '#3cb963'
+              }}
               bulletsContainerStyle={{
-              bottom: -10
-            }}>
+                bottom: -10
+              }}>
+              <Image
+                resizeMethod="resize"
+                style={styles.slide}
+                source={{
+                  uri: 'https://ddimg.ddxq.mobi/1f8435ba1496397258544.jpg'
+                }} />
               <Image
                 style={styles.slide}
                 source={{
-                uri: 'https://ddimg.ddxq.mobi/1f8435ba1496397258544.jpg'
-              }}/>
+                  uri: 'https://ddimg.ddxq.mobi/cfc7b8d21496397263415.jpg'
+                }} />
               <Image
                 style={styles.slide}
                 source={{
-                uri: 'https://ddimg.ddxq.mobi/cfc7b8d21496397263415.jpg'
-              }}/>
-              <Image
-                style={styles.slide}
-                source={{
-                uri: 'https://ddimg.ddxq.mobi/ba2d0c71496397266943.jpg'
-              }}/>
+                  uri: 'https://ddimg.ddxq.mobi/ba2d0c71496397266943.jpg'
+                }} />
             </Carousel>
           </View>
           <View style={styles.detailContainer}>
