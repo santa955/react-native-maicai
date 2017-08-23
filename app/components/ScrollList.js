@@ -20,7 +20,7 @@ export default class ScrollList extends Component {
     super()
   }
 
-  render() {
+  render () {
     let products = this.props.products;
     const navigate = this.props.navigation;
     let cards = products.map((product) => {
@@ -39,7 +39,7 @@ export default class ScrollList extends Component {
           </TouchableOpacity>
           <Text style={styles.cardDesc}>{product.product_name}</Text>
           <View style={styles.cardMore}>
-            <Text style={styles.price}>{"￥"+product.price}</Text>
+            <Text style={styles.price}>{"￥" + product.price}</Text>
             <Icon style={styles.cart} name="shopping-cart" />
           </View>
         </View>

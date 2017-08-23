@@ -44,7 +44,7 @@ const tabNavigator = TabNavigator({
   swipeEnabled: false,
   animationEnabled: true,
   lazy: true,
-  initialRouteName: 'Home',
+  initialRouteName: 'Category',
   backBehavior: 'none',
   tabBarOptions: {
     activeTintColor: '#3cb963',

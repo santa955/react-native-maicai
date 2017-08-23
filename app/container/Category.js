@@ -1,63 +1,54 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View, Dimensions, Image} from 'react-native';
-import {TabNavigator} from 'react-navigation';
-import Carousel from 'react-native-looped-carousel';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, Dimensions, Image, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import SearchHeader from '../components/Header/SearchHeader';
 let screenWidth = Dimensions
   .get('window')
   .width;
 export default class Category extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      size: {
-        width: screenWidth,
-        height: screenWidth / 2
-      }
-    }
+
   }
-  componentDidMount() {}
-  render() {
+  componentDidMount () { }
+  render () {
     return (
-      <View>
-        <View>
-          <Carousel
-            delay={4000}
-            style={this.state.size}
-            autoplay
-            bullets
-            bulletStyle={{
-            margin: 5,
-            width: 6,
-            height: 6,
-            backgroundColor: '#ccc',
-            borderColor: '#ccc'
-          }}
-            chosenBulletStyle={{
-            margin: 5,
-            width: 6,
-            height: 6,
-            backgroundColor: '#3cb963',
-            borderColor: '#3cb963'
-          }}
-            bulletsContainerStyle={{
-            bottom: -10
-          }}>
-            <Image
-              style={styles.slide}
-              source={{
-              uri: 'https://ddimg.ddxq.mobi/01d57f2698fd51503020791480.jpg'
-            }}/>
-            <Image
-              style={styles.slide}
-              source={{
-              uri: 'https://ddimg.ddxq.mobi/081ab8971502876133546.jpg'
-            }}/>
-            <Image
-              style={styles.slide}
-              source={{
-              uri: 'https://ddimg.ddxq.mobi/140a821ba60d61499052414948.png'
-            }}/>
-          </Carousel>
+      <View style={styles.root}>
+        <SearchHeader></SearchHeader>
+        <View style={styles.wrapper}>
+          <View style={styles.menuContainer}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View style={styles.menu}>
+                <Text style={styles.menuText}>安心蔬菜</Text>
+              </View>
+              <View style={styles.menu}>
+                <Text style={styles.menuText}>豆制品</Text>
+              </View>
+              <View style={[styles.menu, styles.menuActive]}>
+                <Text style={styles.menuText}>新鲜水果</Text>
+              </View>
+              <View style={styles.menu}>
+                <Text style={styles.menuText}>肉禽类</Text>
+              </View>
+            </ScrollView>
+          </View>
+          <View style={styles.listContainer}>
+            <View style={styles.item}>
+              <Image
+                resizeMethod="resize"
+                style={styles.itemAvatar}
+                source={{ url: 'https://ddimg.ddxq.mobi/59884c358deb1502974199155.jpg!maicai.product.list' }}
+              />
+              <View>
+                <Text style={styles.itemTitle}>肉禽类</Text>
+                <Text style={styles.itemSubTitle}>肉禽类</Text>
+                <View style={styles.itemAction}>
+                  <Text style={styles.itemPrice}>肉禽类</Text>
+                  <Icon style={styles.itemCart} name="shopping-cart" />
+                </View>
+              </View>
+            </View>
+          </View>
         </View>
       </View>
     )
@@ -65,16 +56,32 @@ export default class Category extends Component {
 }
 
 const styles = StyleSheet.create({
-  wrapper: {},
-  slideContainer: {
-    height: screenWidth / 2
-  },
-  slide: {
+  root: {
     flex: 1,
-    resizeMode: 'contain',
-    height: screenWidth / 2
+    justifyContent: 'flex-start',
+    backgroundColor: '#f5f5f5'
   },
-  dot: {
-    backgroundColor: 'red'
+  wrapper: {
+    flexDirection: 'row'
+  },
+  menuContainer: {
+    backgroundColor: '#f4f4f4',
+  },
+  menu: {
+    maxWidth: 100,
+    padding: 15,
+    borderBottomWidth: 1,
+    borderColor: '#e8e9e8'
+  },
+  menuActive: {
+    backgroundColor: '#fff'
+  },
+  menuText: {
+    color: '#666',
+    fontSize: 14
+  },
+  listContainer: {
+    backgroundColor: '#fff',
+    flex: 1
   }
 })
