@@ -33,7 +33,7 @@ export default class User extends Component {
           <TouchableOpacity
             activeOpacity={1}
             focusedOpacity={1}
-            onPress={() => navigate('Order', { name: 'Brent' })}>
+            onPress={() => navigate('All', { name: 'Brent' })}>
             <View style={styles.blockHeader}>
               <View style={styles.headerItem}>
                 <Image style={styles.icon} source={require("../static/icon-order.png")} />
@@ -47,24 +47,39 @@ export default class User extends Component {
           </TouchableOpacity>
           <View style={styles.blockContent}>
             <View style={styles.headerMenus}>
-              <View style={styles.headerMenu}>
-                <Image
-                  style={styles.headerMenuIcon}
-                  source={require("../static/icon-wait-pay.png")} />
-                <Text style={styles.menuText}>待支付</Text>
-              </View>
-              <View style={styles.headerMenu}>
-                <Image
-                  style={styles.headerMenuIcon}
-                  source={require("../static/icon-wait-receipt.png")} />
-                <Text style={styles.menuText}>待收货</Text>
-              </View>
-              <View style={styles.headerMenu}>
-                <Image
-                  style={styles.headerMenuIcon}
-                  source={require("../static/icon-wait-comment.png")} />
-                <Text style={styles.menuText}>待评价</Text>
-              </View>
+              <TouchableOpacity
+                activeOpacity={1}
+                focusedOpacity={1}
+                onPress={() => navigate('WaitPay', { name: 'Brent' })}>
+                <View style={styles.headerMenu}>
+                  <Image
+                    style={styles.headerMenuIcon}
+                    source={require("../static/icon-wait-pay.png")} />
+                  <Text style={styles.menuText}>待支付</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={1}
+                focusedOpacity={1}
+                onPress={() => navigate('WaitReceipt', { name: 'Brent' })}>
+                <View style={styles.headerMenu}>
+                  <Image
+                    style={styles.headerMenuIcon}
+                    source={require("../static/icon-wait-receipt.png")} />
+                  <Text style={styles.menuText}>待收货</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={1}
+                focusedOpacity={1}
+                onPress={() => navigate('WaitComment', { name: 'Brent' })}>
+                <View style={styles.headerMenu}>
+                  <Image
+                    style={styles.headerMenuIcon}
+                    source={require("../static/icon-wait-comment.png")} />
+                  <Text style={styles.menuText}>待评价</Text>
+                </View>
+              </TouchableOpacity>
               <View style={styles.headerMenu}>
                 <Image
                   style={styles.headerMenuIcon}

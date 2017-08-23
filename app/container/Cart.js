@@ -1,31 +1,30 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image, Dimensions} from 'react-native';
-import {TabNavigator} from 'react-navigation';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { TabNavigator } from 'react-navigation';
+import CartHeader from '../components/Header/CartHeader';
+
 let screenWidth = Dimensions
   .get('window')
   .width;
 export default class Cart extends Component {
   render() {
+    let navigate = this.props.navigation
     return (
       <View style={styles.root}>
-        <Image
-          style={styles.slide}
-          source={{
-          uri: 'https://ddimg.ddxq.mobi/5c2b5ec47056b1493116406706.png'
-        }}/>
-        <Image
-          style={{
-          width: 370,
-          height: 370
-        }}
-          source={{
-          uri: 'https://ddimg.ddxq.mobi/f620821a500761497432658650.jpg'
-        }}/>
-        <Image
-          style={styles.slide}
-          source={{
-          uri: 'https://ddimg.ddxq.mobi/6e72873a765b11497432677615.jpg'
-        }}/>
+        <CartHeader></CartHeader>
+        <View style={styles.emptyContainer}>
+          <Image
+            style={styles.emptyIcon}
+            source={require('../static/icon-cart-empty.png')}
+          />
+          <Text style={styles.emptyText}>购物车还是空的</Text>
+          <TouchableOpacity
+            activeOpacity={1}
+            focusedOpacity={1}
+            onPress={() => navigate.navigate('Home')}>
+            <Text style={styles.emptyButton}>去逛逛</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -34,24 +33,30 @@ export default class Cart extends Component {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    backgroundColor: '#f6f6f6'
   },
-  block: {
-    // flex: 1,
-    flexDirection: 'row',
-    marginBottom: 10,
-    justifyContent: 'space-between',
-    height: 100,
-    backgroundColor: '#fff'
+  emptyContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  item: {
-    width: 50,
-    height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1
+  emptyIcon: {
+    width: 65,
+    height: 65
   },
-  slide: {
-    width: 370,
-    height: 370
+  emptyText: {
+    marginTop: 15,
+    fontSize: 14,
+    color: '#999'
+  },
+  emptyButton: {
+    marginTop: 5,
+    paddingVertical: 6,
+    paddingHorizontal: 50,
+    backgroundColor: '#3cb963',
+    color:'#fff',
+    fontSize: 14,
+    borderRadius: 2
   }
 })

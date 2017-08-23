@@ -6,7 +6,8 @@ import {
   Button,
   Image,
   Dimensions,
-  ScrollView
+  ScrollView,
+  TouchableOpacity
 } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -92,9 +93,15 @@ export default class Home extends Component {
     </Carousel>);
   }
   renderMenus(data) {
+    let navigate = this.props.navigation
     let menus = data.map((menu) => {
       return (
-        <View style={styles.menu} key={menu['meteria_id']}>
+        <TouchableOpacity
+          key={menu['meteria_id']}
+          activeOpacity={1}
+          focusedOpacity={1}
+          onPress={() => navigate.navigate('Category')}>
+        <View style={styles.menu}>
           <Image
             resizeMethod="resize"
             style={styles.menuImage}
@@ -102,7 +109,9 @@ export default class Home extends Component {
               uri: menu.icon_url
             }} />
           <Text style={styles.menuText}>{menu.name}</Text>
-        </View>)
+        </View>
+        </TouchableOpacity>
+      )
     })
 
     return (
@@ -169,10 +178,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   menuImage: {
-    width: 70,
-    height: 70
+    width: 45,
+    height: 45
   },
   menuText: {
-    fontSize: 14
+    fontSize: 12,
+    color: '#555'
   }
 })

@@ -17,7 +17,13 @@ export default class All extends Component {
   render() {
     return (
       <View style={styles.root}>
-        <Text>Wait Pay</Text>
+        <View style={styles.emptyContainer}>
+          <Image
+            style={styles.emptyIcon}
+            source={require('../../static/icon-order-empty.png')}
+          />
+          <Text style={styles.emptyText}>暂时还没有待收货订单</Text>
+        </View>
       </View>
     )
   }
@@ -28,5 +34,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     backgroundColor: '#f5f5f5'
-  }
+  },
+  emptyContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyIcon: {
+    width: 63,
+    height: 80
+  },
+  emptyText: {
+    marginTop: 15,
+    fontSize: 14,
+    color: '#999'
+  },
 })
