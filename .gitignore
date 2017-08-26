@@ -54,3 +54,5 @@ fastlane/screenshots
 
 android/app/android.jks
 android/app/build
+
+.vscode/

@@ -17,9 +17,6 @@ import Block from '../components/Block';
 import ScrollList from '../components/ScrollList';
 import BottomIndicator from '../components/BottomIndicator';
 import BlocksData from '../mock/Home';
-
-console.log(BlocksData)
-
 let screenWidth = Dimensions
   .get('window')
   .width;
@@ -30,8 +27,12 @@ export default class Home extends Component {
       size: {
         width: screenWidth,
         height: screenWidth / 2
-      }
+      },
+      location: {}
     }
+  }
+  componentWillMount() {
+    this.getPosition()
   }
   render() {
     return (
@@ -101,15 +102,15 @@ export default class Home extends Component {
           activeOpacity={1}
           focusedOpacity={1}
           onPress={() => navigate.navigate('Category')}>
-        <View style={styles.menu}>
-          <Image
-            resizeMethod="resize"
-            style={styles.menuImage}
-            source={{
-              uri: menu.icon_url
-            }} />
-          <Text style={styles.menuText}>{menu.name}</Text>
-        </View>
+          <View style={styles.menu}>
+            <Image
+              resizeMethod="resize"
+              style={styles.menuImage}
+              source={{
+                uri: menu.icon_url
+              }} />
+            <Text style={styles.menuText}>{menu.name}</Text>
+          </View>
         </TouchableOpacity>
       )
     })
@@ -141,6 +142,25 @@ export default class Home extends Component {
         </ScrollList>
       </Block>)
     })
+  }
+  getPosition = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const positionData = position.coords;
+        alert('位置：' + JSON.stringify(positionData))
+        this.setState({
+          location: positionData
+        })
+
+      },
+      (error) => {
+        alert('失败：' + JSON.stringify(error.message))
+      }, {
+        enableHighAccuracy: false,
+        timeout: 20000,
+        maximumAge: 1000
+      }
+    );
   }
 }
 

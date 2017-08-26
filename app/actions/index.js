@@ -2,8 +2,7 @@ import * as ACTION_TYPE from './constant';
 import axios from 'axios';
 
 const ajaxAS = axios.create({
-    // baseURL: 'https://news-at.zhihu.com/api/4/news',
-    baseURL: 'http://lovestreet.leanapp.cn/zhihu/',
+    baseURL: 'http://112.74.64.217:3000',
     timeout: 3000,
     headers: { 'Access-Control-Allow-Origin': '*' }
 });
@@ -29,11 +28,23 @@ export const failPosts = (error) => ({
     date: Date.now()
 })
 
-//Fetch Last tnews
-export const getLastNews = () => {
+export const getHomeData = () => {
     return (dispatch) => {
         dispatch(requestPosts());
-        ajaxAS.get('news/latest')
+        ajaxAS.get('/home')
+            .then((r) => {
+                dispatch(receivePosts(r.data.stories || []))
+            })
+            .catch((error) => {
+                dispatch(failPosts(error.message));
+            })
+    }
+}
+
+export const getLoation = () => {
+    return (dispatch) => {
+        dispatch(requestPosts());
+        ajaxAS.get('/home')
             .then((r) => {
                 dispatch(receivePosts(r.data.stories || []))
             })
