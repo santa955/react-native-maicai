@@ -17,7 +17,6 @@ export default class OrderHeader extends Component {
   render() {
     // alert(JSON.stringify(this.props.navigation))
     const navigate = this.props.navigation.navigation;
-    console.log('nat', navigate)
     return (
       <View style={styels.OrderHeader}>
         <TouchableOpacity

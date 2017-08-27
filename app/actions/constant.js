@@ -1,3 +1,8 @@
 export const REQUEST_POSTS = 'REQUEST_POSTS'                        
 export const REQUEST_DONE = 'REQUEST_DONE'    
-export const REQUEST_FAIL = 'REQUEST_FAIL'                          
+export const REQUEST_FAIL = 'REQUEST_FAIL'     
+
+export const REQUEST_GETHOME = 'REQUEST_GETHOME'        
+export const REQUEST_GETDETAIL = 'REQUEST_GETDETAIL'        
+export const REQUEST_GETCATEGORIES = 'REQUEST_GETCATEGORIES'                
+export const REQUEST_GETCATEGORYDETAIL= 'REQUEST_GETCATEGORYDETAIL' 

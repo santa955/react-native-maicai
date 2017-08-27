@@ -20,7 +20,8 @@ export default class ScrollList extends Component {
     super()
   }
 
-  render () {
+  render() {
+    let action = this.props.action;
     let products = this.props.products;
     const navigate = this.props.navigation;
     let cards = products.map((product) => {
@@ -29,7 +30,7 @@ export default class ScrollList extends Component {
           <TouchableOpacity
             activeOpacity={1}
             focusedOpacity={1}
-            onPress={() => navigate.navigate('Detail')}>
+            onPress={() => navigate.navigate('Detail', { 'productId': product.id, action })}>
             <Image
               style={styles.cardImage}
               resizeMethod="resize"

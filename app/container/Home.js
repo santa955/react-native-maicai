@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import {
   StyleSheet,
   Text,
@@ -17,10 +19,11 @@ import Block from '../components/Block';
 import ScrollList from '../components/ScrollList';
 import BottomIndicator from '../components/BottomIndicator';
 import BlocksData from '../mock/Home';
+import * as ACTIONS from '../actions';
 let screenWidth = Dimensions
   .get('window')
   .width;
-export default class Home extends Component {
+class Home extends Component {
   constructor() {
     super()
     this.state = {
@@ -31,30 +34,40 @@ export default class Home extends Component {
       location: {}
     }
   }
-  componentWillMount() {
+  componentDidMount() {
     this.getPosition()
+    this.props.action.getHomeData(this.props.location);
   }
   render() {
+    let data = this.props.data
+    let homeData = {};
+    let isFetching = data.isFetching;
+    if (data.homeData.data) {
+      homeData = data.homeData.data.list
+    }
     return (
       <View style={styles.root}>
         <SearchHeader></SearchHeader>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.wrapper}>
-            {this.renderSlides(BlocksData.list[0].icon_list)}
-          </View>
-          <View style={styles.banner}>
-            <Image
-              resizeMethod="resize"
-              style={styles.banner}
-              source={{
-                uri: 'https://ddimg.ddxq.mobi/bc27ddc54e92b1497233676444.png'
-              }} />
-          </View>
-          {this.renderMenus(BlocksData.list[2].icon_list)}
+        {data.homeData.data && data.homeData.data.list
+          ? (<ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.wrapper}>
+              {this.renderSlides(homeData[0].icon_list)}
+            </View>
+            <View style={styles.banner}>
+              <Image
+                resizeMethod="resize"
+                style={styles.banner}
+                source={{
+                  uri: 'https://ddimg.ddxq.mobi/bc27ddc54e92b1497233676444.png'
+                }} />
+            </View>
+            {this.renderMenus(homeData[2].icon_list)}
 
-          {this.renderBlocks(BlocksData.list)}
-          <BottomIndicator show="true"></BottomIndicator>
-        </ScrollView>
+            {this.renderBlocks(homeData)}
+            <BottomIndicator show="true"></BottomIndicator>
+          </ScrollView>)
+          : null
+        }
       </View>
     )
   }
@@ -137,6 +150,7 @@ export default class Home extends Component {
         type={type == 5 ? 2 : 1}
         link="更多">
         <ScrollList
+          action={this.props.action.getProductDetail}
           products={block.product_list}
           navigation={navigation}>
         </ScrollList>
@@ -147,7 +161,6 @@ export default class Home extends Component {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const positionData = position.coords;
-        alert('位置：' + JSON.stringify(positionData))
         this.setState({
           location: positionData
         })
@@ -163,6 +176,18 @@ export default class Home extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    data: state.home
+  }
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  action: bindActionCreators(ACTIONS, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 const styles = StyleSheet.create({
   root: {

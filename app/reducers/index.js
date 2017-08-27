@@ -1,14 +1,17 @@
-import {combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
-import News from './News';
-import NewsContent from './NewsContent';
-import Themes from './Themes';
-
+import { combineReducers } from 'redux';
+import { NavigationActions } from 'react-navigation';
+import { AppStackNavigator } from '../navigator/AppNavigator';
+import StackReducer from './StackReducer';
+import HomeReducer from './HomeReducer';
+import ProductDetailReducer from './ProductDetailReducer';
+import CategoriesReducer from './CategoriesReducer';
+import CategoryDetailReducer from './CategoryDetailReducer';
 const Reducer = combineReducers({
-    news: News,
-    newsContent: NewsContent,
-    themes: Themes,
-    routing: routerReducer
+    nav: StackReducer,
+    home: HomeReducer,
+    detail: ProductDetailReducer,
+    categories: CategoriesReducer,
+    categoryDetail: CategoryDetailReducer
 });
 
 export default Reducer

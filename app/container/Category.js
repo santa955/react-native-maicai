@@ -1,160 +1,122 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, View, Dimensions, Image, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SearchHeader from '../components/Header/SearchHeader';
 import BottomIndicator from '../components/BottomIndicator';
+import * as ACTIONS from '../actions';
 let screenWidth = Dimensions
   .get('window')
   .width;
-export default class Category extends Component {
+class Category extends Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      activeCateIndex: 0
+    }
   }
-  componentDidMount() { }
+
+  componentDidMount() {
+    let navParam = this.props.navigation.state.params
+    let categoryId = navParam && navParam.categoryId || null;
+    this.props.action.getCategories();
+    // let { categories } = this.props;
+    // categoryId = categoryId || categories.data.cate[0].id;
+    this.props.action.getCategoryDetail('58fd69dc936edf42508b48de');
+  }
+
   render() {
+    let { categories, categoryDetail } = this.props;
+    console.log(categoryDetail)
     return (
       <View style={styles.root}>
         <SearchHeader></SearchHeader>
         <View style={styles.wrapper}>
-          <View style={styles.menuContainer}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={styles.menu}>
-                <Text style={styles.menuText}>安心蔬菜</Text>
-              </View>
-              <View style={styles.menu}>
-                <Text style={styles.menuText}>豆制品</Text>
-              </View>
-              <View style={[styles.menu, styles.menuActive]}>
-                <Text style={styles.menuText}>新鲜水果</Text>
-              </View>
-              <View style={styles.menu}>
-                <Text style={styles.menuText}>肉禽类</Text>
-              </View>
-            </ScrollView>
-          </View>
-          <View style={styles.listContainer}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={styles.item}>
-                <Image
-                  resizeMethod="resize"
-                  style={styles.itemAvatar}
-                  source={{
-                    uri: 'https://ddimg.ddxq.mobi/e85cecad1501807580770.jpg!maicai.product.list'
-                  }} />
-                <View style={styles.itemContent}>
-                  <Text style={styles.itemTitle} numberOfLines={2}>三红胡萝卜 350-500g三红胡萝卜 350-500g三红胡萝卜 350-500g三红胡萝卜 350-500g</Text>
-                  <Text style={styles.itemSubTitle} numberOfLines={1}>红皮红肉红心 胡萝卜精品哦~</Text>
-                  <View style={styles.itemAction}>
-                    <Text style={styles.itemPrice}>￥2.9</Text>
-                    <Icon style={styles.itemCart} name="shopping-cart" />
-                  </View>
-                </View>
-              </View>
-              <View style={styles.item}>
-                <Image
-                  resizeMethod="resize"
-                  style={styles.itemAvatar}
-                  source={{
-                    uri: 'https://ddimg.ddxq.mobi/303c20d81502967140780.jpg!maicai.product.list'
-                  }} />
-                <View style={styles.itemContent}>
-                  <Text style={styles.itemTitle} numberOfLines={2}>铁棍山药 360g</Text>
-                  <Text style={styles.itemSubTitle} numberOfLines={1}>口感干面香甜 适合蒸食煲汤做粥</Text>
-                  <View style={styles.itemAction}>
-                    <Text style={styles.itemPrice}>￥2.9</Text>
-                    <Icon style={styles.itemCart} name="shopping-cart" />
-                  </View>
-                </View>
-              </View>
-              <View style={styles.item}>
-                <Image
-                  resizeMethod="resize"
-                  style={styles.itemAvatar}
-                  source={{
-                    uri: 'https://ddimg.ddxq.mobi/e67b81bd514b61495449652429.jpg!maicai.product.list'
-                  }} />
-                <View style={styles.itemContent}>
-                  <Text style={styles.itemTitle} numberOfLines={2}>荷兰豆 300g</Text>
-                  <Text style={styles.itemSubTitle} numberOfLines={1}>我就喜欢装嫩 你说怎么办哟</Text>
-                  <View style={styles.itemAction}>
-                    <Text style={styles.itemPrice}>￥2.9</Text>
-                    <Icon style={styles.itemCart} name="shopping-cart" />
-                  </View>
-                </View>
-              </View>
-              <View style={styles.item}>
-                <Image
-                  resizeMethod="resize"
-                  style={styles.itemAvatar}
-                  source={{
-                    uri: 'https://ddimg.ddxq.mobi/bc18a3242d2ba1497232266143.jpg!maicai.product.list'
-                  }} />
-                <View style={styles.itemContent}>
-                  <Text style={styles.itemTitle} numberOfLines={2}>红米苋 300g</Text>
-                  <Text style={styles.itemSubTitle} numberOfLines={1}>我的外号叫“长寿菜”！</Text>
-                  <View style={styles.itemAction}>
-                    <Text style={styles.itemPrice}>￥2.9</Text>
-                    <Icon style={styles.itemCart} name="shopping-cart" />
-                  </View>
-                </View>
-              </View>
-              <View style={styles.item}>
-                <Image
-                  resizeMethod="resize"
-                  style={styles.itemAvatar}
-                  source={{
-                    uri: 'https://ddimg.ddxq.mobi/303c20d81502967140780.jpg!maicai.product.list'
-                  }} />
-                <View style={styles.itemContent}>
-                  <Text style={styles.itemTitle} numberOfLines={2}>铁棍山药 360g</Text>
-                  <Text style={styles.itemSubTitle} numberOfLines={1}>口感干面香甜 适合蒸食煲汤做粥</Text>
-                  <View style={styles.itemAction}>
-                    <Text style={styles.itemPrice}>￥2.9</Text>
-                    <Icon style={styles.itemCart} name="shopping-cart" />
-                  </View>
-                </View>
-              </View>
-              <View style={styles.item}>
-                <Image
-                  resizeMethod="resize"
-                  style={styles.itemAvatar}
-                  source={{
-                    uri: 'https://ddimg.ddxq.mobi/303c20d81502967140780.jpg!maicai.product.list'
-                  }} />
-                <View style={styles.itemContent}>
-                  <Text style={styles.itemTitle} numberOfLines={2}>铁棍山药 360g</Text>
-                  <Text style={styles.itemSubTitle} numberOfLines={1}>口感干面香甜 适合蒸食煲汤做粥</Text>
-                  <View style={styles.itemAction}>
-                    <Text style={styles.itemPrice}>￥2.9</Text>
-                    <Icon style={styles.itemCart} name="shopping-cart" />
-                  </View>
-                </View>
-              </View>
-              <View style={styles.item}>
-                <Image
-                  resizeMethod="resize"
-                  style={styles.itemAvatar}
-                  source={{
-                    uri: 'https://ddimg.ddxq.mobi/303c20d81502967140780.jpg!maicai.product.list'
-                  }} />
-                <View style={styles.itemContent}>
-                  <Text style={styles.itemTitle} numberOfLines={2}>铁棍山药 360g</Text>
-                  <Text style={styles.itemSubTitle} numberOfLines={1}>口感干面香甜 适合蒸食煲汤做粥</Text>
-                  <View style={styles.itemAction}>
-                    <Text style={styles.itemPrice}>￥2.9</Text>
-                    <Icon style={styles.itemCart} name="shopping-cart" />
-                  </View>
-                </View>
-              </View>
-              <BottomIndicator></BottomIndicator>
-            </ScrollView>
-          </View>
+          {categories.categories && categories.categories.data
+            ? this.renderCategories(categories.categories.data.cate)
+            : null}
+          {categoryDetail.categoryDetail && categoryDetail.categoryDetail.data
+            ? this.renderCategoryDetail(categoryDetail.categoryDetail.data.cate)
+            : null
+          }
         </View>
       </View>
     )
   }
+
+  renderCategories(categories) {
+    let cates = categories.map((cate, index) => {
+      let active = index == 0 ? styles.menuActive : null;
+      return (
+        <View style={[styles.menu, active]} key={cate.id}>
+          <Text style={[styles.menuText]}>{cate.name}</Text>
+        </View>)
+    });
+
+    return (
+      <View style={styles.menuContainer}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {cates}
+        </ScrollView>
+      </View>
+    )
+  }
+
+  renderCategoryDetail(detailDatas) {
+    let cateGroups = detailDatas.map((detailData) => {
+      let products = detailData.products.map((product) => {
+        return (
+          <View style={styles.item} key={product.id}>
+            <Image
+              resizeMethod="resize"
+              style={styles.itemAvatar}
+              source={{
+                uri: product.small_image
+              }} />
+            <View style={styles.itemContent}>
+              <Text style={styles.itemTitle} numberOfLines={2}>{product.name}</Text>
+              <Text style={styles.itemSubTitle} numberOfLines={1}>{product.spec}</Text>
+              <View style={styles.itemAction}>
+                <Text style={styles.itemPrice}>￥{product.price}</Text>
+                <Icon style={styles.itemCart} name="shopping-cart" />
+              </View>
+            </View>
+          </View>
+        )
+      })
+      return (
+        <View style={styles.grounp} key={detailData.id}>
+          <View style={styles.grounpTitleContainer}>
+            <Text style={styles.title}>{detailData.name}</Text>
+          </View>
+          <View style={styles.grounpItemsContainer}>
+            {products}
+          </View>
+        </View>
+      )
+    });
+
+    return (<View style={styles.listContainer}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {cateGroups}
+        <BottomIndicator></BottomIndicator>
+      </ScrollView>
+    </View>)
+  }
 }
+
+const mapStateToProps = state => {
+  let categories = state.categories;
+  let categoryDetail = state.categoryDetail;
+  return { categories, categoryDetail }
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  action: bindActionCreators(ACTIONS, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Category);
 
 const styles = StyleSheet.create({
   root: {
@@ -165,7 +127,7 @@ const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-   
+
   },
   menuContainer: {
     backgroundColor: '#f4f4f4',
@@ -177,7 +139,8 @@ const styles = StyleSheet.create({
     borderColor: '#e8e9e8'
   },
   menuActive: {
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    borderColor: '#fff'
   },
   menuText: {
     color: '#666',
@@ -188,6 +151,11 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 10,
     marginBottom: 48
+  },
+  grounpTitleContainer: {
+    paddingVertical: 3,
+    paddingLeft: 5,
+    backgroundColor: '#f4f4f4'
   },
   item: {
     paddingVertical: 10,

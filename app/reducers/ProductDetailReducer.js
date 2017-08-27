@@ -1,18 +1,19 @@
 import * as ACTIONS_TYPE from '../actions/constant';
 let initialState = {
-    isFetching: false,
-    themes: []
+    isFetching: true,
+    detail: {},
+    error: ''
 }
 
-const Themes = (state = initialState, action) => {
+const ProductDetailReducer = (state = initialState, action) => {
     switch (action.type) {
         case ACTIONS_TYPE.REQUEST_POSTS:
             return Object.assign({}, state, {
                 isFetching: action.isFetching
             });
-        case ACTIONS_TYPE.REQUEST_DONE:
+        case ACTIONS_TYPE.REQUEST_GETDETAIL:
             return Object.assign({}, state, {
-                themes: action.preload,
+                detail: action.preload,
                 date: action.date,
                 isFetching: action.isFetching
             });
@@ -27,4 +28,4 @@ const Themes = (state = initialState, action) => {
     }
 }
 
-export default Themes;
+export default ProductDetailReducer;

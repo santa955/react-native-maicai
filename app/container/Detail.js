@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import {
   StyleSheet,
   Text,
@@ -12,10 +14,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Carousel from 'react-native-looped-carousel';
 import BottomIndicator from '../components/BottomIndicator';
 import Header from '../components/Header/DetailHeader';
+import { getProductDetail } from '../actions';
 let screenWidth = Dimensions
   .get('window')
   .width;
-export default class Detail extends React.Component {
+class Detail extends React.Component {
   static navigationOptions = {
     header: (HeaderProps) => {
       return <Header navigation={HeaderProps} />
@@ -31,95 +34,121 @@ export default class Detail extends React.Component {
     }
   }
 
+  componentDidMount() {
+    let { productId } = this.props.navigation.state.params;
+    this.props.action.getProductDetail(productId);
+  }
+
   render() {
+    let data = this.props.data;
+    let detail = data.detail;
+    let detailData;
+    if (!data.isFetching) {
+      detailData = detail.data.detail
+    }
+    console.log(detailData)
+
     return (
       <View style={styles.root}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.slideContainer}>
-            <Carousel
-              // pageStyle={this.state.size}
-              style={this.state.size}
-              delay={3000}
-              autoplay
-              bullets              
-              bulletStyle={{
-                margin: 5,
-                width: 6,
-                height: 6,
-                backgroundColor: '#ccc',
-                borderColor: '#ccc'
-              }}
-              chosenBulletStyle={{
-                margin: 5,
-                width: 6,
-                height: 6,
-                backgroundColor: '#3cb963',
-                borderColor: '#3cb963'
-              }}
-              bulletsContainerStyle={{
-                bottom: -10
-              }}>
-              <Image
-                resizeMethod="resize"
-                style={styles.slide}
-                source={{
-                  uri: 'https://ddimg.ddxq.mobi/1f8435ba1496397258544.jpg'
-                }} />
-              <Image
-                style={styles.slide}
-                source={{
-                  uri: 'https://ddimg.ddxq.mobi/cfc7b8d21496397263415.jpg'
-                }} />
-              <Image
-                style={styles.slide}
-                source={{
-                  uri: 'https://ddimg.ddxq.mobi/ba2d0c71496397266943.jpg'
-                }} />
-            </Carousel>
-          </View>
-          <View style={styles.detailContainer}>
-            <View>
-              <Text style={styles.detailTitle}>桂冠刀切馒头 320g/袋</Text>
+        {!data.isFetching
+          ? (<ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.slideContainer}>
+              {this.renderSlides(detailData.image_list)}
             </View>
-            <View>
-              <Text style={styles.detailSubTitle}>16只装 奶香味</Text>
-            </View>
-            <View style={styles.detailMoreInfo}>
-              <View style={styles.moreInfoMain}>
-                <Text style={styles.priceCurrent}>￥5.9</Text>
-                <Text style={styles.pricePrev}>￥9.9</Text>
-                <Text style={styles.buyLimit}>限购一份</Text>
+            <View style={styles.detailContainer}>
+              <View>
+                <Text style={styles.detailTitle}>{detailData.product_name}</Text>
               </View>
               <View>
-                <Text style={styles.saleCount}>已售:1389</Text>
+                <Text style={styles.detailSubTitle}>{detailData.spec}</Text>
+              </View>
+              <View style={styles.detailMoreInfo}>
+                <View style={styles.moreInfoMain}>
+                  <Text style={styles.priceCurrent}>￥{detailData.price}</Text>
+                  <Text style={styles.pricePrev}>￥{detailData.origin_price}</Text>
+                  {detailData.buy_limit
+                    ? <Text style={styles.buyLimit}>限购{detailData.buy_limit}份</Text>
+                    : null
+                  }
+                </View>
+                <View>
+                  <Text style={styles.saleCount}>已售:{detailData.total_sales}</Text>
+                </View>
               </View>
             </View>
-          </View>
-          <View style={styles.paramContainer}>
-            <View style={styles.paramHeader}>
-              <Text style={styles.headeTitle}>规格</Text>
-            </View>
-            <View style={styles.paramTable}>
-              <View style={styles.paramItem}>
-                <Text style={styles.lable}>净含量</Text>
-                <Text style={styles.param}>320g</Text>
+            <View style={styles.paramContainer}>
+              <View style={styles.paramHeader}>
+                <Text style={styles.headeTitle}>规格</Text>
               </View>
-              <View style={styles.paramItem}>
-                <Text style={styles.lable}>保存条件</Text>
-                <Text style={styles.param}>冷藏</Text>
-              </View>
-              <View style={styles.paramItem}>
-                <Text style={styles.lable}>保质期</Text>
-                <Text style={styles.param}>9个月</Text>
+              <View style={styles.paramTable}>
+                {
+                  detailData.propertys_array.map((param, index) => {
+                    return (
+                      <View style={styles.paramItem} key={index}>
+                        <Text style={styles.lable}>{param.name}</Text>
+                        <Text style={styles.param}>{param.value}</Text>
+                      </View>
+                    )
+                  })
+                }
               </View>
             </View>
-          </View>
-          <BottomIndicator show="true"></BottomIndicator>
-        </ScrollView>
+            <BottomIndicator show="true"></BottomIndicator>
+          </ScrollView>)
+          : null}
       </View>
     )
   }
+  renderSlides(data) {
+    let len = data.length;
+    let bullets = len > 1 ? true : false;
+    let slides = data.map((slide, index) => {
+      return (
+        <Image
+          key={index}
+          style={styles.slide}
+          source={{ uri: slide }}
+        />
+      )
+    })
+    return (<Carousel
+      style={this.state.size}
+      delay={3000}
+      autoplay
+      bullets={bullets}
+      bulletStyle={{
+        margin: 5,
+        width: 6,
+        height: 6,
+        backgroundColor: '#ccc',
+        borderColor: '#ccc'
+      }}
+      chosenBulletStyle={{
+        margin: 5,
+        width: 6,
+        height: 6,
+        backgroundColor: '#3cb963',
+        borderColor: '#3cb963'
+      }}
+      bulletsContainerStyle={{
+        bottom: -10
+      }}>
+      {slides}
+    </Carousel>);
+  }
 }
+
+const mapStateToProps = state => {
+  return {
+    data: state.detail
+  }
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  action: bindActionCreators({ getProductDetail }, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Detail);
 
 const styles = StyleSheet.create({
   root: {

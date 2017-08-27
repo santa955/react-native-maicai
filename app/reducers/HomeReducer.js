@@ -1,18 +1,19 @@
 import * as ACTIONS_TYPE from '../actions/constant';
 let initialState = {
     isFetching: false,
-    data: {}
+    homeData: {},
+    error: ''
 }
 
-const NewsContent = (state = initialState, action) => {
+const HomerReducer = (state = initialState, action) => {
     switch (action.type) {
         case ACTIONS_TYPE.REQUEST_POSTS:
             return Object.assign({}, state, {
                 isFetching: action.isFetching
             });
-        case ACTIONS_TYPE.REQUEST_DONE:
+        case ACTIONS_TYPE.REQUEST_GETHOME:
             return Object.assign({}, state, {
-                data: action.preload,
+                homeData: action.preload,
                 date: action.date,
                 isFetching: action.isFetching
             });
@@ -27,4 +28,4 @@ const NewsContent = (state = initialState, action) => {
     }
 }
 
-export default NewsContent;
+export default HomerReducer;

@@ -21,6 +21,36 @@ export const receivePosts = (json) => ({
     date: Date.now()
 })
 
+
+export const receiveProductDetail = (json) => ({
+    type: ACTION_TYPE.REQUEST_GETDETAIL,
+    preload: json,
+    isFetching: false,
+    date: Date.now()
+})
+
+export const receiveHomeData = (json) => ({
+    type: ACTION_TYPE.REQUEST_GETHOME,
+    preload: json,
+    isFetching: false,
+    date: Date.now()
+})
+
+export const receiveCategories = (json) => ({
+    type: ACTION_TYPE.REQUEST_GETCATEGORIES,
+    preload: json,
+    isFetching: false,
+    date: Date.now()
+})
+
+export const receiveCategoryDetail = (json) => ({
+    type: ACTION_TYPE.REQUEST_GETCATEGORYDETAIL,
+    preload: json,
+    isFetching: false,
+    date: Date.now()
+})
+
+
 export const failPosts = (error) => ({
     type: ACTION_TYPE.REQUEST_FAIL,
     preload: error,
@@ -29,11 +59,51 @@ export const failPosts = (error) => ({
 })
 
 export const getHomeData = () => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        //  console.log('state', getState())
         dispatch(requestPosts());
         ajaxAS.get('/home')
             .then((r) => {
-                dispatch(receivePosts(r.data.stories || []))
+                dispatch(receiveHomeData(r.data || {}))
+            })
+            .catch((error) => {
+                dispatch(failPosts(error.message));
+            })
+    }
+}
+
+export const getProductDetail = (productId) => {
+    return (dispatch, getState) => {
+        dispatch(requestPosts());
+        ajaxAS.get(`/detail?productId=${productId}`)
+            .then((r) => {
+                dispatch(receiveProductDetail(r.data || {}))
+            })
+            .catch((error) => {
+                dispatch(failPosts(error.message));
+            })
+    }
+}
+
+export const getCategories = () => {
+    return (dispatch, getState) => {
+        dispatch(requestPosts());
+        ajaxAS.get('/categories')
+            .then((r) => {
+                dispatch(receiveCategories(r.data || {}))
+            })
+            .catch((error) => {
+                dispatch(failPosts(error.message));
+            })
+    }
+}
+
+export const getCategoryDetail = (categoryId) => {
+    return (dispatch, getState) => {
+        dispatch(requestPosts());
+        ajaxAS.get(`/categoryDetail?categoryId=${categoryId}`)
+            .then((r) => {
+                dispatch(receiveCategoryDetail(r.data || {}))
             })
             .catch((error) => {
                 dispatch(failPosts(error.message));
@@ -42,11 +112,12 @@ export const getHomeData = () => {
 }
 
 export const getLoation = () => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+
         dispatch(requestPosts());
         ajaxAS.get('/home')
             .then((r) => {
-                dispatch(receivePosts(r.data.stories || []))
+                dispatch(receivePosts(r.data || []))
             })
             .catch((error) => {
                 dispatch(failPosts(error.message));

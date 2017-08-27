@@ -81,7 +81,7 @@ const tabNavigator = TabNavigator({
     }
   });
 
-const stackNavigator = StackNavigator({
+export const AppStackNavigator = StackNavigator({
   Tabs: {
     screen: tabNavigator,
     navigationOptions: {
@@ -117,19 +117,19 @@ const stackNavigator = StackNavigator({
     }
   });
 
-const AppWithNavigationState = ({ dispatch, nav }) => (
-  <stackNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
-);
+const AppWithNavigationState = ({ dispatch, nav }) => {
+  return <AppStackNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
+};
 
 AppWithNavigationState.propTypes = {
   dispatch: PropTypes.func.isRequired,
   nav: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  nav: state.nav,
-});
+const mapStateToProps = state => {
+  return {
+    nav: state.nav
+  }
+};
 
 export default connect(mapStateToProps)(AppWithNavigationState);
-
-// export default stackNavigator;
