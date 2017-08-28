@@ -113,7 +113,10 @@ android {
     }
     signingConfigs {
         release {
-            
+            storeFile file(APP_RELEASE_STORE_FILE)
+            storePassword APP_RELEASE_STORE_PASSWORD
+            keyAlias APP_RELEASE_KEY_ALIAS
+            keyPassword APP_RELEASE_KEY_PASSWORD
         }
     }
     buildTypes {
