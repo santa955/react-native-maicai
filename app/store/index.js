@@ -4,11 +4,11 @@ import logger from 'redux-logger'
 import { routerReducer } from 'react-router-redux';
 import Reducer from '../reducers';
 
-const middleware = [thunk, logger];
-// if (process.env.NODE_ENV === `development`) {
-//     const { logger } = require(`redux-logger`);
-//     middlewares.push(logger);
-//   }
+const middleware = [thunk];
+if (__DEV__) {
+    const { logger } = require(`redux-logger`);
+    middleware.push(logger);
+  }
 const store = createStore(
     Reducer,
     applyMiddleware(...middleware)

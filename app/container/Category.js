@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, Dimensions, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SearchHeader from '../components/Header/SearchHeader';
 import BottomIndicator from '../components/BottomIndicator';
@@ -21,9 +21,7 @@ class Category extends Component {
     let navParam = this.props.navigation.state.params
     let categoryId = navParam && navParam.categoryId || null;
     this.props.action.getCategories();
-    // let { categories } = this.props;
-    // categoryId = categoryId || categories.data.cate[0].id;
-    this.props.action.getCategoryDetail('58fd69dc936edf42508b48de');
+
   }
 
   render() {
@@ -49,9 +47,15 @@ class Category extends Component {
     let cates = categories.map((cate, index) => {
       let active = index == 0 ? styles.menuActive : null;
       return (
-        <View style={[styles.menu, active]} key={cate.id}>
-          <Text style={[styles.menuText]}>{cate.name}</Text>
-        </View>)
+        <TouchableOpacity
+          key={cate.id}
+          activeOpacity={1}
+          focusedOpacity={1}
+          onPress={this.handleCategoryPress(cate.id)}>
+          <View style={[styles.menu, active]} >
+            <Text style={[styles.menuText]}>{cate.name}</Text>
+          </View>
+        </TouchableOpacity>)
     });
 
     return (
@@ -103,6 +107,11 @@ class Category extends Component {
         <BottomIndicator></BottomIndicator>
       </ScrollView>
     </View>)
+  }
+
+  handleCategoryPress(id) {
+    let action = this.props.action
+    action.getCategoryDetail(id);
   }
 }
 

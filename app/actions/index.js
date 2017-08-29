@@ -113,50 +113,10 @@ export const getCategoryDetail = (categoryId) => {
 
 export const getLoation = () => {
     return (dispatch, getState) => {
-
         dispatch(requestPosts());
         ajaxAS.get('/home')
             .then((r) => {
                 dispatch(receivePosts(r.data || []))
-            })
-            .catch((error) => {
-                dispatch(failPosts(error.message));
-            })
-    }
-}
-
-export const getBeforeNews = (date) => {
-    return (dispatch) => {
-        dispatch(requestPosts());
-        ajaxAS.get('/before/' + date)
-            .then((r) => {
-                dispatch(receivePosts(r.data.stories || []))
-            })
-            .catch((error) => {
-                dispatch(failPosts(error.message));
-            })
-    }
-}
-
-export const getNewsContents = (id) => {
-    return (dispatch) => {
-        dispatch(requestPosts());
-        ajaxAS.get('/news/' + id)
-            .then((r) => {
-                dispatch(receivePosts(r.data || {}))
-            })
-            .catch((error) => {
-                dispatch(failPosts(error.message));
-            })
-    }
-}
-
-export const getThemes = () => {
-    return (dispatch) => {
-        dispatch(requestPosts());
-        ajaxAS.get('/themes')
-            .then((r) => {
-                dispatch(receivePosts(r.data.others || {}))
             })
             .catch((error) => {
                 dispatch(failPosts(error.message));
