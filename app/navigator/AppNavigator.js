@@ -40,7 +40,7 @@ class AppNavigator extends React.Component {
     }
 
     BackHandler.exitApp()
-  };
+  }
 }
 
 const mapStateToProps = state => {

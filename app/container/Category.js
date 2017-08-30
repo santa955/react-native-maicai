@@ -13,20 +13,30 @@ class Category extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeCateIndex: 0
+      activeCateIndex: 0,
+      categoryId: ''
     }
+  }
+
+  componentWillMount() {
+    let navParam = this.props.navigation.state.params
+    let categoryId = navParam && navParam.categoryId || '58fd69dc936edf42508b48de';
+    // this.setState({
+    //   categoryId: categoryId
+    // })
   }
 
   componentDidMount() {
     let navParam = this.props.navigation.state.params
-    let categoryId = navParam && navParam.categoryId || null;
+    let categoryId = navParam && navParam.categoryId || '58fd69dc936edf42508b48de';
+    // let { categoryId } = this.state
     this.props.action.getCategories();
-
+    this.props.action.getCategoryDetail(categoryId);
   }
 
   render() {
     let { categories, categoryDetail } = this.props;
-    console.log(categoryDetail)
+    // console.log(categoryDetail)
     return (
       <View style={styles.root}>
         <SearchHeader></SearchHeader>
@@ -35,7 +45,8 @@ class Category extends Component {
             ? this.renderCategories(categories.categories.data.cate)
             : null}
           {categoryDetail.categoryDetail && categoryDetail.categoryDetail.data
-            ? this.renderCategoryDetail(categoryDetail.categoryDetail.data.cate)
+            ? this.renderCategoryDetail(categoryDetail.categoryDetail.data.cate
+              || categoryDetail.categoryDetail.data.products)
             : null
           }
         </View>
@@ -44,15 +55,20 @@ class Category extends Component {
   }
 
   renderCategories(categories) {
+    let that = this;
+    let categoryId = this.state.categoryId;
     let cates = categories.map((cate, index) => {
-      let active = index == 0 ? styles.menuActive : null;
+      let activeCateIndex = this.state.activeCateIndex;
+      let active = index == activeCateIndex ? styles.menuActive : null;
       return (
         <TouchableOpacity
           key={cate.id}
           activeOpacity={1}
           focusedOpacity={1}
-          onPress={this.handleCategoryPress(cate.id)}>
-          <View style={[styles.menu, active]} >
+          onPress={() => {
+            that.handleCategoryPress(cate.id, index)
+          }}>
+          <View style={[styles.menu, active]}>
             <Text style={[styles.menuText]}>{cate.name}</Text>
           </View>
         </TouchableOpacity>)
@@ -69,36 +85,78 @@ class Category extends Component {
 
   renderCategoryDetail(detailDatas) {
     let cateGroups = detailDatas.map((detailData) => {
-      let products = detailData.products.map((product) => {
-        return (
-          <View style={styles.item} key={product.id}>
-            <Image
-              resizeMethod="resize"
-              style={styles.itemAvatar}
-              source={{
-                uri: product.small_image
-              }} />
-            <View style={styles.itemContent}>
-              <Text style={styles.itemTitle} numberOfLines={2}>{product.name}</Text>
-              <Text style={styles.itemSubTitle} numberOfLines={1}>{product.spec}</Text>
-              <View style={styles.itemAction}>
-                <Text style={styles.itemPrice}>￥{product.price}</Text>
-                <Icon style={styles.itemCart} name="shopping-cart" />
+      if (detailData.products) {
+        let products = detailData.products.map((product) => {
+          return (
+            <TouchableOpacity
+              key={product.id}
+              activeOpacity={1}
+              focusedOpacity={1}
+              onPress={() => {
+                let { navigation, action } = this.props
+                navigation.navigate('Detail', { 'productId': product.id, action })
+              }}>
+              <View style={styles.item}>
+                <Image
+                  resizeMethod="resize"
+                  style={styles.itemAvatar}
+                  source={{
+                    uri: product.small_image
+                  }} />
+                <View style={styles.itemContent}>
+                  <Text style={styles.itemTitle} numberOfLines={2}>{product.name}</Text>
+                  <Text style={styles.itemSubTitle} numberOfLines={1}>{product.spec}</Text>
+                  <View style={styles.itemAction}>
+                    <Text style={styles.itemPrice}>￥{product.price}</Text>
+                    <Icon style={styles.itemCart} name="shopping-cart" />
+                  </View>
+                </View>
               </View>
+            </TouchableOpacity>
+          )
+        })
+        return (
+          <View style={styles.grounp} key={detailData.id}>
+            <View style={styles.grounpTitleContainer}>
+              <Text style={styles.title}>{detailData.name}</Text>
+            </View>
+            <View style={styles.grounpItemsContainer}>
+              {products}
             </View>
           </View>
         )
-      })
-      return (
-        <View style={styles.grounp} key={detailData.id}>
-          <View style={styles.grounpTitleContainer}>
-            <Text style={styles.title}>{detailData.name}</Text>
+      } else {
+        return (
+          <View style={styles.grounp} key={detailData.id}>
+            <View style={styles.grounpItemsContainer}>
+              <TouchableOpacity
+                activeOpacity={1}
+                focusedOpacity={1}
+                onPress={() => {
+                  let { navigation, action } = this.props
+                  navigation.navigate('Detail', { 'productId': detailData.id, action })
+                }}>
+                <View style={styles.item} key={detailData.id}>
+                  <Image
+                    resizeMethod="resize"
+                    style={styles.itemAvatar}
+                    source={{
+                      uri: detailData.small_image
+                    }} />
+                  <View style={styles.itemContent}>
+                    <Text style={styles.itemTitle} numberOfLines={2}>{detailData.name}</Text>
+                    <Text style={styles.itemSubTitle} numberOfLines={1}>{detailData.spec}</Text>
+                    <View style={styles.itemAction}>
+                      <Text style={styles.itemPrice}>￥{detailData.price}</Text>
+                      <Icon style={styles.itemCart} name="shopping-cart" />
+                    </View>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.grounpItemsContainer}>
-            {products}
-          </View>
-        </View>
-      )
+        )
+      }
     });
 
     return (<View style={styles.listContainer}>
@@ -109,9 +167,16 @@ class Category extends Component {
     </View>)
   }
 
-  handleCategoryPress(id) {
+  handleCategoryPress(id, index) {
+    let activeCateIndex = this.state.activeCateIndex;
+    if (activeCateIndex === index) return false;
     let action = this.props.action
     action.getCategoryDetail(id);
+    if (!this.props.isFetching) {
+      this.setState({
+        activeCateIndex: index
+      })
+    }
   }
 }
 

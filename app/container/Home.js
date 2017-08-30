@@ -107,14 +107,15 @@ class Home extends Component {
     </Carousel>);
   }
   renderMenus(data) {
-    let navigate = this.props.navigation
+    let navigation = this.props.navigation;
+    let action = this.props.action;
     let menus = data.map((menu) => {
       return (
         <TouchableOpacity
           key={menu['meteria_id']}
           activeOpacity={1}
           focusedOpacity={1}
-          onPress={() => navigate.navigate('Category')}>
+          onPress={() => navigation.navigate('Category', { 'categoryId': menu['meteria_id'], action })}>
           <View style={styles.menu}>
             <Image
               resizeMethod="resize"

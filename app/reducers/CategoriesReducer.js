@@ -1,6 +1,6 @@
 import * as ACTIONS_TYPE from '../actions/constant';
 let initialState = {
-  isFetching: true,
+  isFetching: false,
   categories: {},
   error: ''
 }

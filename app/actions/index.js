@@ -2,7 +2,8 @@ import * as ACTION_TYPE from './constant';
 import axios from 'axios';
 
 const ajaxAS = axios.create({
-    baseURL: 'http://112.74.64.217:3000',
+    // baseURL: 'http://112.74.64.217:3000',
+    baseURL: 'http://192.168.0.103:3000',
     timeout: 3000,
     headers: { 'Access-Control-Allow-Origin': '*' }
 });
