@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, Dimensions, Image, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SearchHeader from '../components/Header/SearchHeader';
+import Loading from '../components/Loading';
 import BottomIndicator from '../components/BottomIndicator';
 import * as ACTIONS from '../actions';
-let screenWidth = Dimensions
-  .get('window')
-  .width;
+let screen = Dimensions.get('window')
 class Category extends Component {
   constructor(props) {
     super(props);
@@ -18,24 +17,17 @@ class Category extends Component {
     }
   }
 
-  componentWillMount() {
-    let navParam = this.props.navigation.state.params
-    let categoryId = navParam && navParam.categoryId || '58fd69dc936edf42508b48de';
-    // this.setState({
-    //   categoryId: categoryId
-    // })
-  }
-
   componentDidMount() {
     let navParam = this.props.navigation.state.params
     let categoryId = navParam && navParam.categoryId || '58fd69dc936edf42508b48de';
     // let { categoryId } = this.state
     this.props.action.getCategories();
-    this.props.action.getCategoryDetail(categoryId);
+    this.props.action.getCategoryDetail('58fd69dc936edf42508b48de');
   }
 
   render() {
     let { categories, categoryDetail } = this.props;
+
     // console.log(categoryDetail)
     return (
       <View style={styles.root}>
@@ -44,10 +36,8 @@ class Category extends Component {
           {categories.categories && categories.categories.data
             ? this.renderCategories(categories.categories.data.cate)
             : null}
-          {categoryDetail.categoryDetail && categoryDetail.categoryDetail.data
-            ? this.renderCategoryDetail(categoryDetail.categoryDetail.data.cate
-              || categoryDetail.categoryDetail.data.products)
-            : null
+          {
+            this.renderPage()
           }
         </View>
       </View>
@@ -84,6 +74,8 @@ class Category extends Component {
   }
 
   renderCategoryDetail(detailDatas) {
+    let { categoryDetail } = this.props;
+    let detailConent;
     let cateGroups = detailDatas.map((detailData) => {
       if (detailData.products) {
         let products = detailData.products.map((product) => {
@@ -159,12 +151,31 @@ class Category extends Component {
       }
     });
 
+    detailConent = !categoryDetail.isFetching
+      ? cateGroups
+      : <Loading></Loading>
+
     return (<View style={styles.listContainer}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {cateGroups}
-        <BottomIndicator></BottomIndicator>
+        <View style={styles.lists}>
+          {detailConent}
+          {categoryDetail.isFetching
+            ? <BottomIndicator></BottomIndicator>
+            : null}
+        </View>
       </ScrollView>
     </View>)
+  }
+
+  renderPage() {
+    let { categories, categoryDetail } = this.props;
+    let detailData = categoryDetail.categoryDetail
+    return (
+      detailData && detailData.data
+        ? this.renderCategoryDetail(detailData.data.cate
+          || detailData.data.products)
+        : <Loading></Loading>
+    )
   }
 
   handleCategoryPress(id, index) {
@@ -224,7 +235,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     flex: 1,
     paddingLeft: 10,
-    marginBottom: 48
+    marginBottom: 48,
+  },
+  lists: {
+    flex: 1,
+    minHeight: screen.height
   },
   grounpTitleContainer: {
     paddingVertical: 3,

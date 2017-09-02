@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Carousel from 'react-native-looped-carousel';
 import BottomIndicator from '../components/BottomIndicator';
 import Header from '../components/Header/DetailHeader';
+import Loading from '../components/Loading';
 import { getProductDetail } from '../actions';
 let screenWidth = Dimensions
   .get('window')
@@ -46,8 +47,6 @@ class Detail extends React.Component {
     if (!data.isFetching) {
       detailData = detail.data.detail
     }
-    console.log(detailData)
-
     return (
       <View style={styles.root}>
         {!data.isFetching
@@ -95,7 +94,7 @@ class Detail extends React.Component {
             </View>
             <BottomIndicator show="true"></BottomIndicator>
           </ScrollView>)
-          : null}
+          : <Loading></Loading>}
       </View>
     )
   }

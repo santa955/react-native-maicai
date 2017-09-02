@@ -2,8 +2,8 @@ import * as ACTION_TYPE from './constant';
 import axios from 'axios';
 
 const ajaxAS = axios.create({
-    // baseURL: 'http://112.74.64.217:3000',
-    baseURL: 'http://192.168.0.103:3000',
+    baseURL: 'http://112.74.64.217:3000',
+    // baseURL: 'http://192.168.0.103:3000',
     timeout: 3000,
     headers: { 'Access-Control-Allow-Origin': '*' }
 });
@@ -46,6 +46,13 @@ export const receiveCategories = (json) => ({
 
 export const receiveCategoryDetail = (json) => ({
     type: ACTION_TYPE.REQUEST_GETCATEGORYDETAIL,
+    preload: json,
+    isFetching: false,
+    date: Date.now()
+})
+
+export const receiveSearchProduct = (json) => ({
+    type: ACTION_TYPE.REQUEST_GETSEARCHPRODUCT,
     preload: json,
     isFetching: false,
     date: Date.now()
@@ -105,6 +112,19 @@ export const getCategoryDetail = (categoryId) => {
         ajaxAS.get(`/categoryDetail?categoryId=${categoryId}`)
             .then((r) => {
                 dispatch(receiveCategoryDetail(r.data || {}))
+            })
+            .catch((error) => {
+                dispatch(failPosts(error.message));
+            })
+    }
+}
+
+export const getSearchProducts = (keyWord, count, page) => {
+    return (dispatch, getState) => {
+        dispatch(requestPosts());
+        ajaxAS.get(`/search?keyWord=${keyWord}&count=${count}&page=${page}`)
+            .then((r) => {
+                dispatch(receiveSearchProduct(r.data || {}))
             })
             .catch((error) => {
                 dispatch(failPosts(error.message));

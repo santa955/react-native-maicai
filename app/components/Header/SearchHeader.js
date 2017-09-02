@@ -14,47 +14,52 @@ import IconEntypo from 'react-native-vector-icons/Entypo';
 export default class SearchHeader extends Component {
   constructor(props) {
     super(props)
+    this.state = { inputValue: '', autoFocus: false }
+  }
+  componentDidMount() {
+    if (this.props.autoFocus) {
+      this.refs.searchInput.focus();
+    }
   }
   render() {
-    // const navigate = this.props.navigation.navigation;
-    const navigate = null
     return (
-      <View style={styels.searchHeader}>
-        <View style={styels.searchLocation}>
-          <IconEntypo style={styels.locationIcon} name="location-pin" />
+      <View style={styles.searchHeader}>
+        {this.props.showLocation ? (<View style={styles.searchLocation}>
+          <IconEntypo style={styles.locationIcon} name="location-pin" />
           <Text
-            style={styels.locationText}
+            style={styles.locationText}
             numberOfLines={1}>
-            中西大厦中西大厦中西大厦中西大厦中西大厦
+            {this.props.loction ? this.props.loction : '定位中...'}
           </Text>
-          <Icon style={styels.locationIcon} name="md-arrow-dropdown" />
-        </View>
-        <View style={styels.searchForm}>
-          <Icon style={styels.headerSearchIcon} name="ios-search" />
-          <TextInput
-            style={styels.headerSearchInput}
-            selectTextOnFocus={false}
-            editable={true}
-            autoCorrect={false}
-            multiline={false}
-            placeholder="请输入商品名称"
-            underlineColorAndroid="transparent">
-          </TextInput>
+          <Icon style={styles.locationIcon} name="md-arrow-dropdown" />
+        </View>) : null}
+        <View style={styles.searchForm}>
+          <TouchableOpacity
+            style={{ flex: 1, height: 28 }}
+            activeOpacity={1}
+            focusedOpacity={1}
+            onPress={() => {
+              let { navigation, action } = this.props
+              navigation.navigate('Search', { action })
+            }}>
+            <Icon style={styles.headerSearchIcon} name="ios-search" />
+            <Text style={styles.headerSearchInput}>请输入商品名称</Text>
+          </TouchableOpacity>
         </View>
       </View>
     )
   }
 }
 
-const styels = StyleSheet.create({
+const styles = StyleSheet.create({
   searchHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 8,
     backgroundColor: '#fff',
-    borderBottomWidth:1,
-    borderBottomColor:'#efefef'
+    borderBottomWidth: 1,
+    borderBottomColor: '#efefef'
   },
   searchLocation: {
     marginRight: 10,
@@ -74,7 +79,7 @@ const styels = StyleSheet.create({
     flexWrap: 'nowrap'
   },
   searchForm: {
-    flex:1,
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -89,7 +94,7 @@ const styels = StyleSheet.create({
     textAlignVertical: 'center'
   },
   headerSearchInput: {
-    flex:1,
+    flex: 1,
     paddingLeft: 35,
     paddingVertical: 2,
     height: 28,

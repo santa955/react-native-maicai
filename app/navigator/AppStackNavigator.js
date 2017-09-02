@@ -3,6 +3,8 @@ import { StackNavigator } from 'react-navigation';
 import AppTabNavigator from './AppTabNavigator';
 import Detail from '../container/Detail';
 import CustomerAnimate from '../animations';
+import Search from '../container/Search';
+import WebView from '../container/WebView';
 
 const AppStackNavigator = StackNavigator({
   Tabs: {
@@ -29,8 +31,22 @@ const AppStackNavigator = StackNavigator({
       },
       headerTintColor: 'white'
     }
+  },
+  WebView: {
+    screen: WebView,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Search: {
+    screen: Search,
+    navigationOptions: {
+      header: null
+    }
   }
 }, {
+    initialRouteName: 'Tabs',
+    headerMode: 'screen',
     transitionConfig: () => {
       return {
         screenInterpolator: (sceneProps) => {

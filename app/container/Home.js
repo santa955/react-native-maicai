@@ -18,6 +18,7 @@ import SearchHeader from '../components/Header/SearchHeader';
 import Block from '../components/Block';
 import ScrollList from '../components/ScrollList';
 import BottomIndicator from '../components/BottomIndicator';
+import Loading from '../components/Loading';
 import BlocksData from '../mock/Home';
 import * as ACTIONS from '../actions';
 let screenWidth = Dimensions
@@ -35,11 +36,13 @@ class Home extends Component {
     }
   }
   componentDidMount() {
-    this.getPosition()
+    //   let navParam = this.props.navigation.state.params;
+    //   console.log(navParam)
+    this.getPosition();
     this.props.action.getHomeData(this.props.location);
   }
   render() {
-    let data = this.props.data
+    let { navigation, action, data } = this.props;
     let homeData = {};
     let isFetching = data.isFetching;
     if (data.homeData.data) {
@@ -47,9 +50,15 @@ class Home extends Component {
     }
     return (
       <View style={styles.root}>
-        <SearchHeader></SearchHeader>
-        {data.homeData.data && data.homeData.data.list
-          ? (<ScrollView showsVerticalScrollIndicator={false}>
+        <SearchHeader
+          showLocation={true}
+          navigation={navigation}
+          action={action}
+          searchType="product">
+        </SearchHeader>
+        {!homeData.length
+          ? <Loading></Loading>
+          : (<ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.wrapper}>
               {this.renderSlides(homeData[0].icon_list)}
             </View>
@@ -66,19 +75,28 @@ class Home extends Component {
             {this.renderBlocks(homeData)}
             <BottomIndicator show="true"></BottomIndicator>
           </ScrollView>)
-          : null
         }
-      </View>
+
+      </View >
     )
   }
   renderSlides(data) {
+    let { navigation } = this.props;
     let slides = data.map((slide) => {
+      let url = slide.link.data && slide.link.data.url || ''
       return (
-        <Image
+        <TouchableOpacity
           key={slide.meteria_id}
-          style={styles.slide}
-          source={{ uri: slide.icon_url }}
-        />
+          style={{ flex: 1 }}
+          activeOpacity={1}
+          focusedOpacity={1}
+          onPress={() => { navigation.navigate('WebView', { url }) }}>
+          <Image
+            key={slide.meteria_id}
+            style={styles.slide}
+            source={{ uri: slide.icon_url }}
+          />
+        </TouchableOpacity>
       )
     })
     return (<Carousel
@@ -107,8 +125,7 @@ class Home extends Component {
     </Carousel>);
   }
   renderMenus(data) {
-    let navigation = this.props.navigation;
-    let action = this.props.action;
+    let { navigation, action } = this.props;
     let menus = data.map((menu) => {
       return (
         <TouchableOpacity
