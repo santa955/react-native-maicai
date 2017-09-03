@@ -1,6 +1,7 @@
 package com.maicai;
-
+import android.os.Bundle;
 import com.facebook.react.ReactActivity;
+import com.cboy.rn.splashscreen.SplashScreen;
 
 public class MainActivity extends ReactActivity {
 
@@ -12,4 +13,11 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "maicai";
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen.show(this);
+        super.onCreate(savedInstanceState);
+    }
+
 }
