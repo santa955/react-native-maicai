@@ -39,8 +39,8 @@ export default class SearchHeader extends Component {
             activeOpacity={1}
             focusedOpacity={1}
             onPress={() => {
-              let { navigation, action } = this.props
-              navigation.navigate('Search', { action })
+              let { navigation, action, searchType } = this.props
+              navigation.navigate('Search', { action, searchType })
             }}>
             <Icon style={styles.headerSearchIcon} name="ios-search" />
             <Text style={styles.headerSearchInput}>请输入商品名称</Text>

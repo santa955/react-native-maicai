@@ -122,7 +122,7 @@ export const getCategoryDetail = (categoryId) => {
 export const getSearchProducts = (keyWord, count, page) => {
     return (dispatch, getState) => {
         dispatch(requestPosts());
-        ajaxAS.get(`/search?keyWord=${keyWord}&count=${count}&page=${page}`)
+        ajaxAS.get(`/search?keyword=${keyWord}&count=${count}&page=${page}`)
             .then((r) => {
                 dispatch(receiveSearchProduct(r.data || {}))
             })

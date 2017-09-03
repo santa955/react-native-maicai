@@ -185,7 +185,7 @@ class Home extends Component {
 
       },
       (error) => {
-        alert('失败：' + JSON.stringify(error.message))
+        console.log('定位失败：' + JSON.stringify(error.message))
       }, {
         enableHighAccuracy: false,
         timeout: 20000,

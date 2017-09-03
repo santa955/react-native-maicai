@@ -1,4 +1,6 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import {
   Image,
   StyleSheet,
@@ -9,14 +11,15 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import * as ACTIONS from '../actions';
 
-export default class Search extends React.Component {
+class Search extends React.Component {
   constructor(props) {
     super(props)
     this.state = { inputValue: '', autoFocus: false }
   }
   render() {
-    let navigation = this.props.navigation;
+    let results = this.props.searchResults;
     return (
       <View style={styles.root}>
         <View style={styles.searchHeader}>
@@ -41,40 +44,51 @@ export default class Search extends React.Component {
           </View>
         </View>
         <View style={styles.itemsContainer}>
-          <TouchableOpacity
-            activeOpacity={1}
-            focusedOpacity={1}
-            onPress={() => navigation.navigate('Home', { 'forceUpdate': true })}>
-            <Text style={styles.listItem}>白菜</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            focusedOpacity={1}
-            onPress={() => navigation.navigate('Home', { 'forceUpdate': true })}>
-            <Text style={styles.listItem}>大杭白菜</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            focusedOpacity={1}
-            onPress={() => navigation.navigate('Home', { 'forceUpdate': true })}>
-            <Text style={styles.listItem}>小白菜</Text>
-          </TouchableOpacity>
+          {results.data && results.data.list
+            ? this.renderSearchResult(results.data.list)
+            : null}
         </View>
       </View>)
   }
 
+  renderSearchResult(data) {
+    let navigation = this.props.navigation;
+    return data.map((item, index) => {
+      return (
+        <TouchableOpacity
+          key={index}
+          activeOpacity={1}
+          focusedOpacity={1}
+          onPress={() => navigation.navigate('Home', { 'forceUpdate': true })}>
+          <Text style={styles.listItem}>{item}</Text>
+        </TouchableOpacity>
+      )
+    })
+  }
+
   handlerTextChange(text) {
+    let navParam = this.props.navigation.state.params;
+    let searchType = navParam.searchType || 'product';
+    let action = this.props.action;
     this.setState({ inputValue: text })
     clearTimeout(this.timer)
     this.timer = setTimeout(() => {
-      let searchType = this.props.searchType
-      let action = this.props.action
-      if (searchType == 'product') {
+      if (searchType == 'product' && action) {
         action.getSearchProducts(text, 10, 1)
       }
-    }, 300)
+    }, 0)
   }
 }
+
+const mapStateToProps = state => {
+  return state.searchProducts
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  action: bindActionCreators(ACTIONS, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);
 
 const styles = StyleSheet.create({
   root: {

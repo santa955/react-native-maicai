@@ -46,7 +46,7 @@ const AppStackNavigator = StackNavigator({
   }
 }, {
     initialRouteName: 'Tabs',
-    headerMode: 'screen',
+    // headerMode: 'screen',
     transitionConfig: () => {
       return {
         screenInterpolator: (sceneProps) => {

@@ -1,7 +1,7 @@
 import * as ACTIONS_TYPE from '../actions/constant';
 let initialState = {
   isFetching: false,
-  products: {},
+  searchResults: {},
   error: ''
 }
 
@@ -13,7 +13,7 @@ const ProductDetailReducer = (state = initialState, action) => {
       });
     case ACTIONS_TYPE.REQUEST_GETSEARCHPRODUCT:
       return Object.assign({}, state, {
-        products: action.preload,
+        searchResults: action.preload,
         date: action.date,
         isFetching: action.isFetching
       });

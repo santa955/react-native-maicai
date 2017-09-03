@@ -19,7 +19,7 @@ export default class WebWiew extends React.Component {
     let url = params.url || ''
     return (
       <WebView
-        source={{ 'uri': 'https://maicai.m.ddxq.mobi?channel=1030/#/pintuan/home?_k=93q312' }}
+        source={{ 'uri': url }}
         style={{ marginTop: 20 }}
       />
     );
